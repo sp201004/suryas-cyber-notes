@@ -1800,25 +1800,29 @@ export default function ModuleMap({
           };
           const segments = getDesktopSegments();
 
-          // Compact mobile zigzag geometry (smaller horizontal amplitude ~29/71%,
-          // so the alternating path survives on narrow screens instead of collapsing)
-          const mLeftX = 100;
-          const mRightX = 240;
-          const mYSpacing = 145;
-          const mMapHeight = totalCount > 0 ? 150 + (totalCount - 1) * mYSpacing : 120;
+          // Compact mobile zigzag geometry — mirrors the desktop math exactly
+          // (same anchor offset, same ySpacing, labels beside icons at icon-level)
+          // just with narrower columns + a smaller viewBox so it fits + reads big.
+          const mAnchor = 45;          // identical to desktop platform-tip anchor
+          const mYSpacing = 140;       // identical to desktop
+          const mMapHeight = totalCount > 0 ? 160 + (totalCount - 1) * mYSpacing : 120;
+          const mLeftX = 95;
+          const mRightX = 285;
           const mPoints = module.topics.map((_, idx) => ({
             x: idx % 2 === 0 ? mLeftX : mRightX,
-            y: 60 + idx * mYSpacing,
+            y: 80 + idx * mYSpacing,
           }));
           const mSegments: LineSegment[] = [];
           for (let i = 0; i < mPoints.length - 1; i++) {
             const startOnLeft = i % 2 === 0;
+            const x1 = mPoints[i].x;
             const y1 = mPoints[i].y + 17;
+            const x2 = mPoints[i + 1].x;
             const y2 = mPoints[i + 1].y + 17;
             mSegments.push({
-              x1: startOnLeft ? mPoints[i].x + 42 : mPoints[i].x - 42,
+              x1: startOnLeft ? x1 + mAnchor : x1 - mAnchor,
               y1,
-              x2: startOnLeft ? mPoints[i + 1].x - 42 : mPoints[i + 1].x + 42,
+              x2: startOnLeft ? x2 - mAnchor : x2 + mAnchor,
               y2,
             });
           }
@@ -2003,15 +2007,15 @@ export default function ModuleMap({
                     </svg>
                   </div>
 
-                  {/* MOBILE VIEW: Compact SVG zigzag (same alternating path as desktop, smaller amplitude) */}
+                  {/* MOBILE VIEW: Compact SVG zigzag — same geometry, dashes & labels-beside as desktop */}
                   <div className="md:hidden flex justify-center w-full" id={`mobile-path-container-${module.id}`}>
                     <svg
-                      width="340"
+                      width="380"
                       height={mMapHeight}
-                      viewBox={`0 0 340 ${mMapHeight}`}
-                      className="w-full max-w-[340px] h-auto drop-shadow-lg overflow-visible"
+                      viewBox={`0 0 380 ${mMapHeight}`}
+                      className="w-full max-w-[380px] h-auto drop-shadow-lg overflow-visible"
                     >
-                      {/* Ground Layer Connection Cable Paths */}
+                      {/* Ground Layer Connection Cable Paths (identical dash pattern/thickness to desktop) */}
                       <g id={`mobile-path-connection-lines-${module.id}`}>
                         {mSegments.map((seg, sIdx) => (
                           <g key={sIdx} id={`mobile-segment-${module.id}-${sIdx}`}>
@@ -2021,8 +2025,9 @@ export default function ModuleMap({
                               y1={seg.y1}
                               x2={seg.x2}
                               y2={seg.y2}
+                              fill="none"
                               stroke="#2d3a54"
-                              strokeWidth="5"
+                              strokeWidth="6"
                               strokeLinecap="round"
                               opacity="0.6"
                             />
@@ -2032,10 +2037,11 @@ export default function ModuleMap({
                               y1={seg.y1}
                               x2={seg.x2}
                               y2={seg.y2}
+                              fill="none"
                               stroke="#9fef00"
-                              strokeWidth="2.5"
+                              strokeWidth="3.5"
                               strokeLinecap="round"
-                              className={`neon-path-${module.id} filter drop-shadow-[0_0_4px_rgba(159,239,0,0.8)]`}
+                              className={`neon-path-${module.id} filter drop-shadow-[0_0_5px_rgba(159,239,0,0.8)]`}
                               opacity="0.85"
                             />
                           </g>
@@ -2060,16 +2066,19 @@ export default function ModuleMap({
                           >
                             {renderIsometricRoom(topic.id, x, y, isCompleted, isHovered, 'mobile')}
 
-                            {/* Centered label beneath each icon (wraps to 2 lines, no clipping) */}
+                            {/* Label BESIDE the icon on its outer side (out of the connector corridor),
+                                vertically centered on the icon, wrapping to 2 lines max */}
                             <foreignObject
-                              x={x - 80}
-                              y={y + 32}
-                              width={160}
-                              height={46}
+                              x={idx % 2 === 0 ? x + 70 : x - 220}
+                              y={y - 15}
+                              width={150}
+                              height={54}
                               className="pointer-events-none"
                             >
-                              <div className="flex items-start justify-center h-full text-center px-1 select-none">
-                                <span className={`text-[13px] font-extrabold tracking-tight leading-snug font-sans line-clamp-2 transition-colors duration-200 ${
+                              <div className={`flex items-center h-full select-none ${
+                                idx % 2 === 0 ? 'justify-start text-left' : 'justify-end text-right'
+                              }`}>
+                                <span className={`text-[15px] font-extrabold tracking-tight leading-snug font-sans line-clamp-2 transition-colors duration-200 ${
                                   isHovered
                                     ? 'text-[#9fef00] drop-shadow-[0_0_8px_rgba(159,239,0,0.6)]'
                                     : 'text-gray-200'
