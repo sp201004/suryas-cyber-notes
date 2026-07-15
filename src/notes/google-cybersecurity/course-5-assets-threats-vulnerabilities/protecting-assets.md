@@ -90,35 +90,37 @@
 
 ### Hashing — One-Way Verification
 
+**HASHING — One-Way Verification + Salting Defence**
+
+**HOW HASHING WORKS:**
+
 ```
-HASHING — One-Way Verification + Salting Defence
-HOW HASHING WORKS:
 Input: 'Password123'  --[SHA-256 algorithm]-->  Hash:
 '0a4d55a8d778e5022fab701977c5d840bbc486d0'  (fixed-length output)
 Input: 'Password124'  --[SHA-256 algorithm]-->  Hash:
 'completely different hash output'  (one char change = totally different hash)
+```
 
-KEY PROPERTIES:
-* ONE-WAY: Cannot reverse a hash to get original input. EVER.
-* DETERMINISTIC: Same input always produces same hash.
-* AVALANCHE: Tiny change in input = completely different hash.
-* FIXED LENGTH: SHA-256 always outputs 256 bits regardless of input size.
+**KEY PROPERTIES:**
+- ONE-WAY: Cannot reverse a hash to get original input. EVER.
+- DETERMINISTIC: Same input always produces same hash.
+- AVALANCHE: Tiny change in input = completely different hash.
+- FIXED LENGTH: SHA-256 always outputs 256 bits regardless of input size.
 
-USES:
-* Password storage: Store hash, not plaintext password.
-* File integrity: Hash a file to detect if it was modified.
-* Digital signatures: Prove who signed a document.
+**USES:**
+- Password storage: Store hash, not plaintext password.
+- File integrity: Hash a file to detect if it was modified.
+- Digital signatures: Prove who signed a document.
 
-ATTACKS ON HASHING:
-* Hash Collision: Two different inputs produce the same hash (MD5 is vulnerable).
-* Rainbow Tables: Pre-computed dictionaries of password-to-hash mappings.
+**ATTACKS ON HASHING:**
+- Hash Collision: Two different inputs produce the same hash (MD5 is vulnerable).
+- Rainbow Tables: Pre-computed dictionaries of password-to-hash mappings.
 
-DEFENCE -- SALTING:
+**DEFENCE -- SALTING:**
 Add a RANDOM string (salt) to password BEFORE hashing.
 'Password123' + random salt 'xK9#' = hash('Password123xK9#')
 Even if two users have same password, their salted hashes are completely different.
 Rainbow tables are defeated because attackers cannot pre-compute salted hashes.
-```
 
 | **Algorithm** | **Type** | **Status** | **Key Use** |
 | --- | --- | --- | --- |

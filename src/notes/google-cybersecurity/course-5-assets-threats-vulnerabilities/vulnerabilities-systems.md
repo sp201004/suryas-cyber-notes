@@ -177,35 +177,31 @@
 
 ## Brute Force Attacks & Defences
 
-```
-BRUTE FORCE ATTACK TYPES:
+**BRUTE FORCE ATTACK TYPES**
 
-DICTIONARY ATTACK:
+**DICTIONARY ATTACK:**
 Try: 'password', 'admin', '123456', 'iloveyou', 'qwerty'...
 Uses a pre-built wordlist of commonly used passwords.
 Very fast against weak passwords. Fails against random complex passwords.
 
-CREDENTIAL STUFFING:
+**CREDENTIAL STUFFING:**
 Take database of 100M leaked username/password pairs from one breach.
 Automatically try ALL of them on a DIFFERENT website.
 Works because 65% of people reuse passwords across sites.
 Tools: Sentry MBA, OpenBullet, SentryMBA
 
-SIMPLE BRUTE FORCE:
+**SIMPLE BRUTE FORCE:**
 Try every possible combination: aaaa, aaab, aaac... zzzz, aaaa1...
 Theoretically cracks any password given enough time.
 8-char password: modern GPU = hours/days. 16-char random = centuries.
 
-TOOLS USED: Aircrack-ng (Wi-Fi), Hashcat (hash cracking), John the Ripper
+**TOOLS USED:** Aircrack-ng (Wi-Fi), Hashcat (hash cracking), John the Ripper
 
-DEFENCES:
-* MFA: Password cracked? Attacker still needs physical device.
-* Account lockout: Lock after 5 failed attempts for 15 minutes.
-* CAPTCHA: Proves human, stops automated bots instantly.
-* Salting: Unique salt defeats rainbow tables and pre-computation.
-* Rate limiting: Slow down login attempts (max 3/minute).
-* SIEM alert: Alert on >5 failed logins from same IP in 60 seconds.
-```
+**DEFENCES:**
+- MFA: Password cracked? Attacker still needs physical device.
+- Account lockout: Lock after 5 failed attempts for 15 minutes.
+- CAPTCHA: Proves human, stops automated bots instantly.
+- Salting: Unique salt defeats rainbow tables and pre-computation.
 
 ## OSINT — Open-Source Intelligence
 

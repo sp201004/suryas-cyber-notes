@@ -13,31 +13,20 @@
 > **Attackers exploit:** urgency, fear, curiosity, trust, helpfulness, and desire for reward.
 > **Defence:** Security awareness training is the PRIMARY countermeasure.
 
-```
-SOCIAL ENGINEERING ATTACK SPECTRUM:
+**SOCIAL ENGINEERING ATTACK SPECTRUM**
 
-PHYSICAL / IN-PERSON:
-* Tailgating (Piggybacking):
-Unauthorized person physically follows authorized employee through secure door.
-Classic technique: Carry heavy boxes. Employee politely holds the door open.
+**PHYSICAL / IN-PERSON:**
+- **Tailgating (Piggybacking):** Unauthorized person physically follows authorized employee through secure door. Classic technique: Carry heavy boxes. Employee politely holds the door open.
+- **Baiting (USB Drop):** Leave USB drive labeled 'Q4 Employee Bonuses' in company parking lot. Curious employee plugs it in. Malware auto-executes. Network compromised.
 
-* Baiting (USB Drop):
-Leave USB drive labeled 'Q4 Employee Bonuses' in company parking lot.
-Curious employee plugs it in. Malware auto-executes. Network compromised.
+**DIGITAL DECEPTION (PHISHING FAMILY):**
+Phishing = Deceptive EMAIL to masses. 'Your Netflix payment failed.'
+Smishing = Phishing via TEXT MESSAGE. 'FedEx: Package delayed. Click here.'
+Vishing = Phishing via VOICE CALL. 'IRS: You owe taxes. Call back immediately.'
 
-DIGITAL DECEPTION (PHISHING FAMILY):
-Phishing   = Deceptive EMAIL to masses. 'Your Netflix payment failed.'
-Smishing   = Phishing via TEXT MESSAGE. 'FedEx: Package delayed. Click here.'
-Vishing    = Phishing via VOICE CALL. 'IRS: You owe taxes. Call back immediately.'
-
-TARGETED ATTACKS:
-Spear Phishing = Highly customized phishing targeting ONE specific person.
-Attacker researches target on LinkedIn, personalizes the attack.
-Whaling        = Spear phishing targeting EXECUTIVES (CEO, CFO).
-'Hi CFO, this is the CEO. Wire $50K to new vendor by 5PM today.'
-Angler Phishing= Impersonate customer support on SOCIAL MEDIA.
-Customer tweets complaint. Fake support account DMs them for PIN.
-```
+**TARGETED ATTACKS:**
+Spear Phishing = Highly customized phishing targeting ONE specific person. Attacker researches target on LinkedIn, personalizes the attack.
+Whaling = Spear phishing targeting EXECUTIVES (CEO, CFO).
 
 | **Attack** | **Vector** | **Urgency Technique** | **Detection / Defence** |
 | --- | --- | --- | --- |
@@ -104,31 +93,26 @@ Customer tweets complaint. Fake support account DMs them for PIN.
 
 ### Cross-Site Scripting (XSS)
 
-```
 XSS = Injecting malicious JavaScript into a webpage that other users visit.
 
-TYPE 1: REFLECTED XSS
-Attacker crafts malicious URL --> victim clicks it --> browser REFLECTS
-the malicious script from the server back to the victim's browser.
-www.bank.com/search?q=<script>steal(document.cookie)</script>
+**TYPE 1: REFLECTED XSS**
+Attacker crafts malicious URL --> victim clicks it --> browser REFLECTS the malicious script from the server back to the victim's browser.
+`www.bank.com/search?q=<script>steal(document.cookie)</script>`
 Victim's browser runs the script. Session cookie stolen. Account hijacked.
 
-TYPE 2: STORED XSS (more dangerous)
+**TYPE 2: STORED XSS (more dangerous)**
 Attacker posts a comment on a blog with hidden malicious script.
 Script is STORED on the server's database.
 EVERY visitor to that blog post automatically runs the malicious script.
 One injection = many victims.
 
-TYPE 3: DOM-BASED XSS
+**TYPE 3: DOM-BASED XSS**
 Attack happens entirely INSIDE the victim's browser.
 No data sent to server. Modifies the DOM environment locally.
 
-DEFENCE AGAINST ALL XSS:
-* Input Validation: Reject inputs containing <script> tags or HTML.
-* Output Encoding: Encode all user data before displaying it on the page.
-* Content Security Policy (CSP): Browser header that blocks inline scripts.
-* HttpOnly cookies: Prevents JavaScript from reading session cookies.
-```
+**DEFENCE AGAINST ALL XSS:**
+- Input Validation: Reject inputs containing <script> tags or HTML.
+- Output Encoding: Encode all user data before displaying it on the page.
 
 ### SQL Injection (SQLi)
 

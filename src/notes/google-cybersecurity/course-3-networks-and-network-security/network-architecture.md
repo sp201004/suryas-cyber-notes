@@ -199,23 +199,23 @@
   |    |====DATA=======>|               |  |                                     |
   |    |<====DATA=======|               |  |                                     |
   +-------------------------------------+  +-------------------------------------+
-  GUARANTEES:                              NO GUARANTEES:
-  * Delivery confirmation                  * No delivery confirmation
-  * Correct packet ordering                * No ordering guarantee
-  * Lost packets re-sent                   * Lost packets are GONE
-  * Slower (overhead)                      * FAST (minimal overhead)
-
-  
-USE TCP FOR:                             USE UDP FOR:
-  * Database queries (no data loss)        * Live video/audio streaming
-  * File transfers                         * Online gaming
-  * Web pages (HTTP/HTTPS)                 * DNS lookups
-  * Email sending/receiving                * Real-time metrics/telemetry
-
-  SECURITY NOTE: TCP's SYN handshake is exploited by SYN Flood attacks.
-  Attackers send millions of SYN packets but never complete the handshake,
-  exhausting the server's connection table and blocking legitimate users.
 ```
+
+| **TCP — Guarantees** | **UDP — No Guarantees** |
+| --- | --- |
+| Delivery confirmation | No delivery confirmation |
+| Correct packet ordering | No ordering guarantee |
+| Lost packets re-sent | Lost packets are GONE |
+| Slower (overhead) | FAST (minimal overhead) |
+
+| **Use TCP For** | **Use UDP For** |
+| --- | --- |
+| Database queries (no data loss) | Live video/audio streaming |
+| File transfers | Online gaming |
+| Web pages (HTTP/HTTPS) | DNS lookups |
+| Email sending/receiving | Real-time metrics/telemetry |
+
+> **⚠️ Security Note:** TCP's SYN handshake is exploited by SYN Flood attacks. Attackers send millions of SYN packets but never complete the handshake, exhausting the server's connection table and blocking legitimate users.
 
 ## Cloud Computing & Software-Defined Networks
 

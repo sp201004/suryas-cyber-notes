@@ -75,30 +75,19 @@ RULE: Never send raw log data to executives.
 
 > **SECURITY STORYTELLING — Beginning / Middle / End Framework**
 
-```
-SECURITY STORY STRUCTURE:
+**SECURITY STORY STRUCTURE**
 
-BEGINNING (The Alert / Challenge):
+**BEGINNING (The Alert / Challenge):**
 What happened? State the observable fact clearly.
-Example: 'We detected a 40% spike in automated password-guessing attempts
-against our HR payroll system over the past 24 hours.'
+Example: 'We detected a 40% spike in automated password-guessing attempts against our HR payroll system over the past 24 hours.'
 
-MIDDLE (The Impact / Playbook Strategy):
+**MIDDLE (The Impact / Playbook Strategy):**
 What does this mean for the business? What does the playbook say to do?
-Example: 'This activity endangers sensitive employee PII and financial records.
-Following our incident playbook, we initiated temporary geographic
-blocks on incoming requests from the source IP ranges.'
+Example: 'This activity endangers sensitive employee PII and financial records. Following our incident playbook, we initiated temporary geographic blocks on incoming requests from the source IP ranges.'
 
-END (The Actionable Solution / Recommendation):
+**END (The Actionable Solution / Recommendation):**
 What specific action do you recommend right now?
-Example: 'I recommend we immediately mandate MFA for all payroll administrators
-to secure these high-risk accounts before the next business day.'
-
-KEY: Each section answers ONE question for the stakeholder:
-Beginning = What do I need to KNOW?
-Middle    = Why does it MATTER to our business?
-End       = What do I need to DECIDE or APPROVE?
-```
+Example: 'I recommend we immediately mandate MFA for all payroll administrators to secure these high-risk accounts before the next business day.'
 
 ## Communication Channels — Choosing the Right Medium
 
