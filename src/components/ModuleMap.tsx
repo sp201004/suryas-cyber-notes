@@ -1861,7 +1861,7 @@ export default function ModuleMap({
               <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#2d3a54]/60 pb-4 mb-8 text-left gap-2 select-none">
                 <div>
                   <h3 className="text-xl font-bold text-white flex items-center space-x-2">
-                    <span className="text-gray-500 font-mono text-sm mr-1">
+                    <span className="text-[#9fef00] font-mono text-sm font-semibold mr-1">
                       {String(mIdx + 1).padStart(2, '0')}
                     </span>
                     <span>{module.title}</span>
