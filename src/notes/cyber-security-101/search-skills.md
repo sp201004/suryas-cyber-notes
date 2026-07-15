@@ -112,20 +112,27 @@ Perform Investigation
 
 **Shodan** is a search engine that indexes devices connected to the Internet.
 
-Unlike Google, which searches **content**, Shodan searches **devices**:
+Unlike Google, which searches **content**, Shodan searches **devices**.
 
-| Google searches | Shodan searches |
-|-----------------|-----------------|
-| Websites | Servers |
-| Images | Routers |
-| Videos | Firewalls |
-| Documents | CCTV Cameras |
-| | Databases |
-| | IoT Devices |
-| | Printers |
-| | NAS Devices |
-| | Industrial Control Systems (ICS) |
-| | Smart Devices |
+**Google searches:**
+
+- ✔ Websites
+- ✔ Images
+- ✔ Videos
+- ✔ Documents
+
+**Shodan searches:**
+
+- ✔ Servers
+- ✔ Routers
+- ✔ Firewalls
+- ✔ CCTV Cameras
+- ✔ Databases
+- ✔ IoT Devices
+- ✔ Printers
+- ✔ NAS Devices
+- ✔ Industrial Control Systems (ICS)
+- ✔ Smart Devices
 
 > **Memory Trick:** Google searches **CONTENT** — Shodan searches **DEVICES**.
 
@@ -323,10 +330,10 @@ Each service should be reviewed for:
 
 ### Limitations
 
-- ✘ Results may not be real-time
-- ✘ Some devices block scanning
-- ✘ Internal/private networks cannot be indexed
-- ✘ Missing information if ports are closed
+-  Results may not be real-time
+-  Some devices block scanning
+-  Internal/private networks cannot be indexed
+-  Missing information if ports are closed
 
 ---
 
@@ -809,11 +816,11 @@ Take Action
 
 ## 30-Second Revision
 
-- ✅ Shodan is a search engine for Internet-connected devices.
-- ✅ It scans public IP addresses and collects service banners.
-- ✅ Banners reveal software names, versions, and services.
-- ✅ Common filters include `country:`, `port:`, `hostname:`, `org:`, `product:`.
-- ✅ Used by both Red Teams and Blue Teams for reconnaissance, asset discovery, and exposure monitoring.
+- Shodan is a search engine for Internet-connected devices.
+- It scans public IP addresses and collects service banners.
+- Banners reveal software names, versions, and services.
+- Common filters include `country:`, `port:`, `hostname:`, `org:`, `product:`.
+- Used by both Red Teams and Blue Teams for reconnaissance, asset discovery, and exposure monitoring.
 
 -  VirusTotal scans files using multiple antivirus engines.
 -  SHA256 is the most commonly used file hash.
