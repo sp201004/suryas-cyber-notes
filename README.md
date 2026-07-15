@@ -6,7 +6,7 @@
 
 **A personal cybersecurity study-notes platform — my TryHackMe & Google Cybersecurity journey, turned into an interactive, gamified learning site.**
 
-[**🌐 Live Demo → spnotes.vercel.app**](https://spnotes.vercel.app/)
+[**🌐 Live → spnotes.vercel.app**](https://spnotes.vercel.app/)
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)
