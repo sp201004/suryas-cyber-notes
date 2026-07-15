@@ -16,9 +16,6 @@ import howWebsitesWork from './module3/how-websites-work.md?raw';
 import puttingItAllTogether from './module3/putting-it-all-together.md?raw';
 import mysteryChest3 from './module3/mystery-chest.md?raw';
 
-import linuxIntro from './module4/linux-intro.md?raw';
-import windowsInternals from './module5/windows-internals.md?raw';
-
 import insideAComputerSystem from './module4-comp-fund/inside-a-computer-system.md?raw';
 import computerTypes from './module4-comp-fund/computer-types.md?raw';
 import clientServerBasics from './module4-comp-fund/client-server-basics.md?raw';
@@ -114,8 +111,6 @@ export const notesByTopicId: Record<string, string> = {
   'how-websites-work': howWebsitesWork,
   'putting-it-all-together': puttingItAllTogether,
   'mystery-chest-web': mysteryChest3,
-  'linux-intro': linuxIntro,
-  'windows-internals': windowsInternals,
 
   'inside-a-computer-system': insideAComputerSystem,
   'computer-types': computerTypes,

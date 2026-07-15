@@ -1154,7 +1154,6 @@ const renderUniqueIsometricObject = (
       );
 
     case 'linux-operating-system':
-    case 'linux-intro':
       return (
         <g id="linux-scene">
           <ellipse cx={x} cy={y + 17} rx={22} ry={7} fill="rgba(34, 197, 94, 0.12)" filter="blur(4px)" />
