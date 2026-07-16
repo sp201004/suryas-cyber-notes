@@ -26,9 +26,9 @@
 > **THREE LOG SOURCES — At a Glance**
 
 ```
-  ┌─────────────────────────────────────────────────────────────────────────┐
-  │                    THREE LOG SOURCES                                    │
-  └─────────────────────────────────────────────────────────────────────────┘
+    ┌─────────────────────────────────────────────────────────────────────────┐
+    │                          THREE LOG SOURCES                              │
+    └─────────────────────────────────────────────────────────────────────────┘
 
   INTERNET/EXTERNAL                    INTERNAL NETWORK                 SERVERS
        │                                      │                            │
@@ -124,27 +124,18 @@
 
 > **OPEN-SOURCE vs. PROPRIETARY — Key Differences**
 
-```
-  ┌─────────────────────────────────────────────────────────────────────────┐
-  │           OPEN-SOURCE  vs.  PROPRIETARY                                 │
-  ├────────────────────────────────┬────────────────────────────────────────┤
-  │  OPEN-SOURCE                   │  PROPRIETARY                           │
-  ├────────────────────────────────┼────────────────────────────────────────┤
-  │ Source code: PUBLIC            │ Source code: PRIVATE (vendor only)     │
-  │ Cost: FREE                     │ Cost: Expensive licensing fees         │
-  │ Customization: UNLIMITED       │ Customization: Vendor-controlled       │
-  │ Security: Community-reviewed   │ Security: Vendor-patched on schedule   │
-  │ Patches: Fast (community)      │ Patches: Slow (wait for vendor release)│
-  │ Support: Community forums      │ Support: Dedicated vendor support      │
-  ├────────────────────────────────┼────────────────────────────────────────┤
-  │ Examples: Linux, Suricata,     │ Examples: Splunk Enterprise,           │
-  │           Wireshark, Snort     │           Google Chronicle, CrowdStrike│
-  └────────────────────────────────┴────────────────────────────────────────┘
+| **Attribute** | **Open-Source** | **Proprietary** |
+| --- | --- | --- |
+| Source code | PUBLIC | PRIVATE (vendor only) |
+| Cost | FREE | Expensive licensing fees |
+| Customization | UNLIMITED | Vendor-controlled |
+| Security | Community-reviewed | Vendor-patched on schedule |
+| Patches | Fast (community) | Slow (wait for vendor release) |
+| Support | Community forums | Dedicated vendor support |
+| Examples | Linux, Suricata, Wireshark, Snort | Splunk Enterprise, Google Chronicle, CrowdStrike |
 
-  MYTH: Open-source is less secure because hackers can see the code.
-  REALITY: MORE security researchers worldwide reviewing = faster vulnerability discovery.
-  Linux powers 96% of the world's top 1 million web servers.
-```
+> **MYTH:** Open-source is less secure because hackers can see the code.
+> **REALITY:** MORE security researchers worldwide reviewing = faster vulnerability discovery. Linux powers 96% of the world's top 1 million web servers.
 
 | **Open-Source Tool** | **Function & Context** |
 | --- | --- |
@@ -165,27 +156,16 @@
 
 > **SPLUNK vs. CHRONICLE**
 
-```
-  ┌─────────────────────────────────────────────────────────────────────────┐
-  │              SPLUNK  vs.  GOOGLE CHRONICLE                              │
-  ├──────────────────────────────────┬──────────────────────────────────────┤
-  │  SPLUNK                          │  GOOGLE CHRONICLE                    │
-  ├──────────────────────────────────┼──────────────────────────────────────┤
-  │ Type: Self-hosted OR Cloud       │ Type: Cloud-Native only              │
-  │ Origin: Built for on-prem,       │ Origin: Built FROM SCRATCH for cloud │
-  │         later moved to cloud     │         Fully leverages Google infra │
-  │ Data Processing: Good at real-   │ Data Processing: Petabyte-scale      │
-  │                  time searching  │ search — extreme speed & scale       │
-  │ Interface: SPL query language    │ Interface: UDM + YARA-L rules        │
-  │ Pricing: Per GB of data indexed  │ Pricing: Per user/capacity model     │
-  │ Strength: Massive ecosystem,     │ Strength: Google AI integration,     │
-  │           thousands of plugins   │           unmatched scalability      │
-  └──────────────────────────────────┴──────────────────────────────────────┘
+| **Attribute** | **Splunk** | **Google Chronicle** |
+| --- | --- | --- |
+| Type | Self-hosted OR Cloud | Cloud-Native only |
+| Origin | Built for on-prem, later moved to cloud | Built FROM SCRATCH for cloud. Fully leverages Google infra |
+| Data Processing | Good at real-time searching | Petabyte-scale search — extreme speed & scale |
+| Interface | SPL query language | UDM + YARA-L rules |
+| Pricing | Per GB of data indexed | Per user/capacity model |
+| Strength | Massive ecosystem, thousands of plugins | Google AI integration, unmatched scalability |
 
-  KEY DISTINCTION: 'Cloud-native' (Chronicle) ≠ 'Cloud-hosted' (Splunk Cloud).
-  Chronicle was architecturally designed for cloud from day one.
-  Splunk Cloud is the same on-prem software running on cloud infrastructure.
-```
+> **KEY DISTINCTION:** 'Cloud-native' (Chronicle) ≠ 'Cloud-hosted' (Splunk Cloud). Chronicle was architecturally designed for cloud from day one. Splunk Cloud is the same on-prem software running on cloud infrastructure.
 
 ## Splunk Dashboards — Deep Dive
 
