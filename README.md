@@ -92,23 +92,26 @@ npm run preview   # serves the production build locally
 
 ```
 src/
-├── App.tsx              # Routes, layout, landing/home, footer
-├── main.tsx            # Entry point
-├── index.css           # Theme + animations (Tailwind)
-├── data.ts             # TryHackMe course/module/room data
-├── dataGoogleCyber.ts  # Google Cybersecurity course data
-├── types.ts            # Shared types (Topic, MindmapNode, ...)
+├── App.tsx                 # Routes, layout, landing/home, footer
+├── main.tsx                # Entry point
+├── index.css               # Theme + animations (Tailwind)
+├── types.ts                # Shared types (Topic, MindmapNode, ...)
+├── data.ts                 # TryHackMe Pre-Security course/module/room data
+├── dataCyberSecurity101.ts # Cyber Security 101 course data
+├── dataGoogleCyber.ts      # Google Cybersecurity course data
+├── data/
+│   └── sharedIntroRooms.ts # Rooms shared across courses
 ├── components/
 │   ├── Header.tsx          # Brand header
 │   ├── ModuleMap.tsx       # Course map + isometric 3D room icons
 │   ├── NotesView.tsx       # Notes renderer, mindmap, sidebar
 │   ├── BinaryBackground.tsx
 │   └── ErrorBoundary.tsx
-├── notes/
-│   ├── index.ts            # Maps every room id → its markdown notes
-│   ├── module1 … module7*  # TryHackMe notes (.md)
-│   └── google-course-1…8/  # Google Cybersecurity notes (.md)
-└── assets/source-notes/    # Original raw source notes (reference)
+└── notes/
+    ├── index.ts                     # Maps every room id → its markdown notes
+    ├── tryhackme/pre-security/       # TryHackMe Pre-Security notes (.md)
+    ├── tryhackme/cyber-security-101/ # Cyber Security 101 notes (.md)
+    └── google-cybersecurity/         # Google Cybersecurity notes (.md)
 ```
 
 ---
