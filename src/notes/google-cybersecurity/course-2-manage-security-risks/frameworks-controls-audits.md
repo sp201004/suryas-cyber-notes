@@ -26,27 +26,14 @@
 
 ## Security Controls — Three Major Categories
 
-> **THREE CONTROL CATEGORIES**
-
-```
-  ┌─────────────────────────────────────────────────────────────────────┐
-  │              THREE CATEGORIES OF SECURITY CONTROLS                  │
-  └─────────────────────────────────────────────────────────────────────┘
-
-  ┌────────────────────────┐  ┌────────────────────────┐  ┌────────────────────────┐
-  │  ADMINISTRATIVE /      │  │  TECHNICAL CONTROLS    │  │  PHYSICAL CONTROLS     │
-  │  MANAGERIAL CONTROLS   │  │                        │  │                        │
-  ├────────────────────────┤  ├────────────────────────┤  ├────────────────────────┤
-  │ Focus: HUMAN &         │  │ Focus: DIGITAL SYSTEMS │  │ Focus: TANGIBLE ASSETS │
-  │ POLICY layer           │  │ & HARDWARE             │  │ & SPACES               │
-  ├────────────────────────┤  ├────────────────────────┤  ├────────────────────────┤
-  │ • Policies & Standards │  │ • Firewalls & IDS      │  │ • Locks & Cages        │
-  │ • Procedures           │  │ • Encryption           │  │ • CCTV & Guards        │
-  │ • Training Programs    │  │ • Antivirus Software   │  │ • Badge Access         │
-  │ • Account Mgmt Policy  │  │ • MFA Systems          │  │ • Mantraps             │
-  │ • Acceptable Use Policy│  │ • SIEM Tools           │  │ • Fire Suppression     │
-  └────────────────────────┘  └────────────────────────┘  └────────────────────────┘
-```
+| **Administrative / Managerial Controls** | **Technical Controls** | **Physical Controls** |
+| --- | --- | --- |
+| Focus: Human & Policy layer | Focus: Digital Systems & Hardware | Focus: Tangible Assets & Spaces |
+| Policies & Standards | Firewalls & IDS | Locks & Cages |
+| Procedures | Encryption | CCTV & Guards |
+| Training Programs | Antivirus Software | Badge Access |
+| Account Mgmt Policy | MFA Systems | Mantraps |
+| Acceptable Use Policy | SIEM Tools | Fire Suppression |
 
 ## Four Functional Types of Controls
 

@@ -891,6 +891,31 @@ const getComparisonModel = (node: any): { headers: string[]; cols: string[][] } 
   return { headers, cols };
 };
 
+// Decide if a table should render as N side-by-side titled PANELS instead of a
+// row-matched table: parallel columns of short list items with UNEQUAL fill
+// (independent lists, not row-paired tuples). Handles 2-column comparisons
+// (External/Internal) and 3-column structures (HEADER/PAYLOAD/FOOTER). Returns
+// the column count (2 or 3) or 0.
+const panelColumns = (node: any): number => {
+  const { headers, cols } = getComparisonModel(node);
+  const n = headers.length;
+  if (n < 2 || n > 3) return 0;
+  const hl = headers.map(h => h.toLowerCase());
+  if (hl.some(h => VALUE_SECOND.has(h))) return 0;            // key/value table
+  const first = headers[0].replace(/\*/g, '').trim();
+  if (first === '' || /^\d+$/.test(first)) return 0;          // numbered/blank
+  if (n === 2 && KEY_FIRST.has(hl[0])) return 0;
+  const lens = cols.map(c => c.length);
+  const avg = cols.map(c => c.length ? c.reduce((s, x) => s + x.trim().split(/\s+/).length, 0) / c.length : 0);
+  if (avg.some(a => a > 6)) return 0;                          // long descriptions = table
+  // UNEQUAL column fill ⟹ independent lists (row-paired tables always fill every
+  // cell). This is the safe signal for panels vs a real table.
+  const unequal = new Set(lens.filter(l => l > 0)).size > 1;
+  if (!unequal) return 0;
+  if (n === 2) return lens.some(l => l >= 3) ? 2 : 0;
+  return 3;   // 3-col unequal = independent-list structure (e.g. HEADER/PAYLOAD/FOOTER)
+};
+
 // A 2-column table is a COMPARISON (equal-weight columns) unless:
 //  - its headers look key/value (KEY_FIRST / VALUE_SECOND), or
 //  - column 1 is a short label and column 2 is a long description
@@ -898,14 +923,26 @@ const getComparisonModel = (node: any): { headers: string[]; cols: string[][] } 
 // >2 columns is always key/value (bold first column).
 const isComparisonTable = (node: any): boolean => {
   const h = getTableHeaders(node);
-  if (h.length !== 2) return false;
-  const first = h[0].replace(/\*/g, '').trim();
+  const first = h.length ? h[0].replace(/\*/g, '').trim() : '';
   if (first === '' || /^\d+$/.test(first)) return false;   // numbered/step or blank-header = key/value
-  const h0 = h[0].toLowerCase(), h1 = h[1].toLowerCase();
-  if (KEY_FIRST.has(h0) || VALUE_SECOND.has(h1)) return false;
-  const { c0, c1 } = tableColAvgWords(node);
-  if (c0 <= 3 && c1 >= 6) return false;   // label → description = key/value
-  return true;
+  const hl = h.map(x => x.toLowerCase());
+  if (h.length === 2) {
+    if (KEY_FIRST.has(hl[0]) || VALUE_SECOND.has(hl[1])) return false;
+    const { c0, c1 } = tableColAvgWords(node);
+    if (c0 <= 3 && c1 >= 6) return false;   // label → description = key/value
+    return true;
+  }
+  // 3 parallel columns of short items (no key/value header) → equal weight,
+  // e.g. Administrative/Technical/Physical Controls. Term|Definition|Example
+  // (long col) or Feature|A|B (key header) stay key/value with bold col 1.
+  if (h.length === 3) {
+    if (hl.some(x => VALUE_SECOND.has(x)) || KEY_FIRST.has(hl[0])) return false;
+    const { headers, cols } = getComparisonModel(node);
+    void headers;
+    const avg = cols.map(c => c.length ? c.reduce((s, x) => s + x.trim().split(/\s+/).length, 0) / c.length : 0);
+    return avg.every(a => a <= 6);
+  }
+  return false;
 };
 
 const markdownComponents: import('react-markdown').Components = {
@@ -1122,33 +1159,31 @@ const markdownComponents: import('react-markdown').Components = {
     </div>
   ),
   table: ({node, children, ...props}) => {
-    const comparison = isComparisonTable(node);
-
-    // Unequal comparison lists (not row-paired) → side-by-side titled panels
-    // (each its own bullet list, no empty cells). Stacks on mobile.
-    if (comparison) {
+    // Independent-list tables (2-col comparisons, 3-col structures) → titled
+    // panels, each its own bullet list. No empty cells. Stacks on mobile.
+    const pcols = panelColumns(node);
+    if (pcols) {
       const { headers, cols } = getComparisonModel(node);
-      if (cols.length === 2 && cols[0].length !== cols[1].length) {
-        return (
-          <div className="my-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-            {cols.map((col, i) => (
-              <div key={i} className="rounded-xl border border-[#2d3a54] overflow-hidden shadow-md shadow-black/20 bg-[#161c2c]/40">
-                <div className="bg-[#9fef00]/10 border-b border-[#9fef00]/20 text-[#9fef00] px-4 py-3 font-bold uppercase tracking-wider font-mono text-xs">
-                  {headers[i]}
-                </div>
-                <ul className="p-4 pl-6 space-y-1.5 text-xs text-gray-300 list-disc marker:text-[#9fef00]/60 font-sans leading-relaxed">
-                  {col.map((cell, j) => <li key={j}>{cell}</li>)}
-                </ul>
+      const grid = pcols === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2';
+      return (
+        <div className={`my-6 grid grid-cols-1 ${grid} gap-4`}>
+          {cols.map((col, i) => (
+            <div key={i} className="rounded-xl border border-[#2d3a54] overflow-hidden shadow-md shadow-black/20 bg-[#161c2c]/40">
+              <div className="bg-[#9fef00]/10 border-b border-[#9fef00]/20 text-[#9fef00] px-4 py-3 font-bold uppercase tracking-wider font-mono text-xs">
+                {headers[i]}
               </div>
-            ))}
-          </div>
-        );
-      }
+              <ul className="p-4 pl-6 space-y-1.5 text-xs text-gray-300 list-disc marker:text-[#9fef00]/60 font-sans leading-relaxed">
+                {col.map((cell, j) => <li key={j}>{cell}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      );
     }
 
     // Key/value tables bold the first column; comparison tables keep both
     // columns equal weight.
-    const boldFirst = !comparison;
+    const boldFirst = !isComparisonTable(node);
     const wrap = "my-6 overflow-hidden rounded-xl border border-[#2d3a54] shadow-md shadow-black/20" +
       (boldFirst ? " [&_tbody_td:first-child]:font-semibold [&_tbody_td:first-child]:text-gray-100" : "");
     return (

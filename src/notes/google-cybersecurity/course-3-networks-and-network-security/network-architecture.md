@@ -102,23 +102,16 @@
 
 ## Data Packets — How Data Actually Travels
 
-> **DATA PACKET — Three-Part Structure**
-> **EVERY piece of data on a network is broken into PACKETS before transmission.**
+EVERY piece of data on a network is broken into PACKETS before transmission.
 
-```
-  +------------------------------------------------------------------+
-  | DATA PACKET STRUCTURE                                            |
-  +------------------+--------------------------+--------------------+
-  |     HEADER       |         PAYLOAD          |       FOOTER       |
-  +------------------+--------------------------+--------------------+
-  | Routing info:    | The actual data:         | End marker:        |
-  | * Source IP      | * Your email text        | * Signals packet   |
-  | * Destination IP | * Part of a file         |   is complete      |
-  | * Protocol (TCP) | * Portion of a webpage   | * Error detection  |
-  | * TTL countdown  | * Video stream chunk     |   checksum (CRC)   |
-  | * Packet size    |                          |                    |
-  +------------------+--------------------------+--------------------+
-```
+| **HEADER** | **PAYLOAD** | **FOOTER** |
+| --- | --- | --- |
+| Routing info: | The actual data: | End marker: |
+| Source IP | Your email text | Signals packet is complete |
+| Destination IP | Part of a file | Error detection checksum (CRC) |
+| Protocol (TCP) | Portion of a webpage | |
+| TTL countdown | Video stream chunk | |
+| Packet size | | |
 
 **WHY PACKETS?** Large files are broken into thousands of packets. Each packet may take a DIFFERENT route to the destination. The destination reassembles them in the correct order. If a packet is lost, only THAT packet is re-sent -- not the whole file.
 
