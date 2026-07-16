@@ -710,6 +710,41 @@ const boldLabelsGlobally = (md: string): string => {
   }).join('\n');
 };
 
+// Course-agnostic pass: bold a standalone LEAD-IN line that directly introduces
+// a list or a table (e.g. "The open ports mean:", "Common sources:", "From this
+// banner we learn:"). These were rendering as plain body text. Runs for EVERY
+// room in the render pipeline, so every current AND future course gets it.
+// Guards keep ordinary prose untouched: the line must be short (<=8 words),
+// start upper/number, contain NO sentence punctuation (only an optional trailing
+// ':'), be standalone (preceded by a blank line or a heading), and the next
+// non-blank line must be a list item or a table row.
+const boldLeadIns = (md: string): string => {
+  const lines = md.split('\n');
+  const isListOrTable = (s: string) => /^(?:[-*+]\s+|\d+[.)]\s+|\|)/.test(s.trim());
+  let inFence = false;
+  return lines.map((line, i) => {
+    if (line.trim().startsWith('```')) { inFence = !inFence; return line; }
+    if (inFence) return line;
+    const m = line.match(/^(\s*)(\S.*)$/);
+    if (!m) return line;
+    const indent = m[1], s = m[2].trim();
+    if (/^(?:\*\*|#|>|\||[-*+]\s|\d+[.)]\s|`)/.test(s)) return line;   // already styled/structural
+    if (!/^[A-Z0-9]/.test(s)) return line;
+    if (s.includes('`')) return line;                                  // inline code → leave
+    const core = s.replace(/:$/, '');
+    if (/[.!?]/.test(core)) return line;                               // no sentence punctuation
+    if (core.split(/\s+/).length > 8) return line;
+    // standalone: previous line blank or a heading
+    const prev = i > 0 ? lines[i - 1].trim() : '';
+    if (prev !== '' && !/^#{1,6}\s/.test(prev)) return line;
+    // next non-blank line must be a list or table
+    let j = i + 1;
+    while (j < lines.length && lines[j].trim() === '') j++;
+    if (j >= lines.length || !isListOrTable(lines[j])) return line;
+    return `${indent}**${s}**`;
+  }).join('\n');
+};
+
 // Convert a pulled-out prose segment into clean markdown: dedent, '* ' -> '- ',
 // and bold a leading label via the shared helper. Verbatim words preserved.
 const normalizeProseSegment = (text: string): string =>
@@ -1671,9 +1706,11 @@ export default function NotesView({
   // styled tables instead of leaking raw pipes (applies site-wide). Then bold
   // label lines everywhere (outside fenced code / tables).
   const rawContent = boldLabelsGlobally(
-    fixConversionTitleCallouts(
-      fixRawBullets(
-        fixStepCards(detachNestedTables(tagCodeFences(foldedContent)))
+    boldLeadIns(
+      fixConversionTitleCallouts(
+        fixRawBullets(
+          fixStepCards(detachNestedTables(tagCodeFences(foldedContent)))
+        )
       )
     )
   );
