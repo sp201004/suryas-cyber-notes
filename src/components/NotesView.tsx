@@ -820,7 +820,7 @@ const markdownComponents: import('react-markdown').Components = {
                 {tableData.rows.map((row, rowIdx) => (
                   <tr key={rowIdx} className="even:bg-[#1c2538]/40 odd:bg-[#161c2c]/40 hover:bg-[#1c2538]/60 transition-colors">
                     {row.map((cell, cellIdx) => (
-                      <td key={cellIdx} className="px-4 py-3 text-gray-300 leading-relaxed">
+                      <td key={cellIdx} className={`px-4 py-3 leading-relaxed ${cellIdx === 0 ? 'font-semibold text-gray-100' : 'text-gray-300'}`}>
                         {cell}
                       </td>
                     ))}
@@ -895,7 +895,7 @@ const markdownComponents: import('react-markdown').Components = {
     </div>
   ),
   table: ({node, children, ...props}) => (
-    <div className="my-6 overflow-hidden rounded-xl border border-[#2d3a54] shadow-md shadow-black/20">
+    <div className="my-6 overflow-hidden rounded-xl border border-[#2d3a54] shadow-md shadow-black/20 [&_tbody_td:first-child]:font-semibold [&_tbody_td:first-child]:text-gray-100">
       <table className="w-full text-left border-collapse font-sans text-xs" {...props}>
         {children}
       </table>

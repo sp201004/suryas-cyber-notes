@@ -47,22 +47,14 @@
 | AVAILABILITY | Information systems remain reliably accessible to authorized users when needed. | A grocery store with backup generators open 24/7 during a blackout. | Kubernetes with pod replication, auto-scaling, and liveness/readiness probes. Hardware failure triggers automatic traffic rerouting to surviving nodes. |
 
 ## The Threat Landscape — External vs. Internal
-```
-  +-------------------------------------------------------------------------+
-  |                       THE THREAT LANDSCAPE                              |
-  +--------------------------------------+----------------------------------+
-  |  EXTERNAL THREATS                    |  INTERNAL THREATS                |
-  +--------------------------------------+----------------------------------+
-  | * Organized Cybercrime (Ransomware)  | * Malicious Insiders (Theft)     |
-  | * Nation-State APTs (Espionage)      | * Accidental Insiders            |
-  | * Hacktivists (DDoS, Defacement)     |   (Misconfig, Phishing victims)  |
-  | * Script Kiddies (Pre-made tools)    | * Departing Employees            |
-  +--------------------------------------+----------------------------------+
+| **External Threats** | **Internal Threats** |
+| --- | --- |
+| Organized Cybercrime (Ransomware) | Malicious Insiders (Theft) |
+| Nation-State APTs (Espionage) | Accidental Insiders (Misconfig, Phishing victims) |
+| Hacktivists (DDoS, Defacement) | Departing Employees |
+| Script Kiddies (Pre-made tools) | |
 
-  KEY INSIGHT: Internal threats are often MORE DANGEROUS than external.
-  Reason: Insiders already have legitimate access -- no perimeter to breach.
-  Mitigation: Principle of Least Privilege (PoLP) strictly enforced.
-```
+> **KEY INSIGHT:** Internal threats are often MORE DANGEROUS than external. Reason: Insiders already have legitimate access -- no perimeter to breach. Mitigation: Principle of Least Privilege (PoLP) strictly enforced.
 
 | **Threat Type** | **Who** | **Motive** | **Real Example** |
 | --- | --- | --- | --- |
@@ -114,25 +106,18 @@
 | PHI | Protected Health Information | Health and medical data protected by HIPAA. | Diagnoses, prescriptions, treatment history, insurance info, mental health records. | HIPAA-mandated controls. 60-day breach notification. Strict access logs. |
 
 ## Blue Team vs. Red Team
-```
-  +-------------------------------------------------------------------------+
-  |                        THE DEFENSIVE BALANCE                            |
-  +--------------------------------------+----------------------------------+
-  |  BLUE TEAM (Defenders)               |  RED TEAM (Adversaries)          |
-  +--------------------------------------+----------------------------------+
-  | * System hardening & log analysis    | * Offensive penetration testing  |
-  | * Real-time incident response        | * Simulating real threat actors  |
-  | * Creating defensive playbooks       | * Uncovering policy/code gaps    |
-  | * SIEM monitoring and triage         | * Social engineering tests       |
-  | * Firewall rule management           | * Network mapping and recon      |
-  +--------------------------------------+----------------------------------+
+| **Blue Team (Defenders)** | **Red Team (Adversaries)** |
+| --- | --- |
+| System hardening & log analysis | Offensive penetration testing |
+| Real-time incident response | Simulating real threat actors |
+| Creating defensive playbooks | Uncovering policy/code gaps |
+| SIEM monitoring and triage | Social engineering tests |
+| Firewall rule management | Network mapping and recon |
 
-  PURPLE TEAM: Blue + Red working together in real-time to immediately
-  improve defenses based on offensive findings. Best of both worlds.
+> **PURPLE TEAM:** Blue + Red working together in real-time to immediately improve defenses based on offensive findings. Best of both worlds.
 
-  Security ANALYST = Frontline operations (monitoring, triage, response)
-  Security ENGINEER = Systems architecture (building, configuring, automating)
-```
+**Security ANALYST** = Frontline operations (monitoring, triage, response)
+**Security ENGINEER** = Systems architecture (building, configuring, automating)
 
 ## Security Tools — SIEM, IDS, and DFIR
 

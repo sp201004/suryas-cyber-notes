@@ -94,29 +94,21 @@
 > MALICIOUS USE: Stealing credentials, reading private communications, intercepting sensitive data.
 
 > **PASSIVE vs. ACTIVE PACKET SNIFFING**
-> **HOW NICs WORK (Normal):           HOW ATTACKERS EXPLOIT IT:**
-> **Network segment carries ALL        Attacker sets NIC to PROMISCUOUS MODE.**
-> **traffic, but NIC only passes       In this mode, NIC accepts ALL packets**
-> **packets addressed to IT to         on the segment -- not just those addressed**
-> **the OS. Other packets dropped.     to it. Every conversation is visible.**
-> **PASSIVE SNIFFING:                  ACTIVE SNIFFING:**
 
-```
-  +----------------------------+     +----------------------------+
-  | Attacker connects to HUB   |     | Attacker injects forged    |
-  | (or uses promiscuous mode) |     | ARP replies to redirect    |
-  | Silently reads ALL traffic |     | traffic through their NIC  |
-  | Does NOT alter packets     |     | Can MODIFY packet contents |
-  | Like reading someone's     |     | Like rewriting a letter    |
-  | mail without unsealing it  |     | before re-sealing it       |
-  +----------------------------+     +----------------------------+
+**How NICs Work (Normal):** Network segment carries ALL traffic, but NIC only passes packets addressed to it to the OS. Other packets dropped.
 
-  DEFENCE against both types:
-  * TLS/HTTPS: Even sniffed packets are encrypted ciphertext -- unreadable.
-  * VPN: All traffic encrypted end-to-end through the tunnel.
-  * Avoid public Wi-Fi for sensitive work without a VPN.
-  * Use switches (not hubs) -- limits traffic to intended ports.
-```
+**How Attackers Exploit It:** Attacker sets NIC to PROMISCUOUS MODE. In this mode, NIC accepts ALL packets on the segment -- not just those addressed to it. Every conversation is visible.
+
+| **Passive Sniffing** | **Active Sniffing** |
+| --- | --- |
+| Attacker connects to HUB (or uses promiscuous mode). Silently reads ALL traffic. Does NOT alter packets. Like reading someone's mail without unsealing it. | Attacker injects forged ARP replies to redirect traffic through their NIC. Can MODIFY packet contents. Like rewriting a letter before re-sealing it. |
+
+**DEFENCE against both types:**
+
+- TLS/HTTPS: Even sniffed packets are encrypted ciphertext -- unreadable.
+- VPN: All traffic encrypted end-to-end through the tunnel.
+- Avoid public Wi-Fi for sensitive work without a VPN.
+- Use switches (not hubs) -- limits traffic to intended ports.
 
 ## IP Spoofing & Advanced Network Attacks
 
