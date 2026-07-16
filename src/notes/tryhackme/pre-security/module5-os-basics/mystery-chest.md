@@ -2,8 +2,7 @@
 
 - [Windows Basics — 1-Minute Revision](#windows-basics--1-minute-revision)
 - [Quick Revision](#quick-revision)
-- [CMD & CLI Reference](#cmd--cli-reference)
-- [One Shot Revision](#one-shot-revision)
+- [Command Reference](#command-reference)
 - [TryHackMe Answers](#tryhackme-answers)
 
 > **Bonus Notes**: This is a centralized collection of all quick revision sections, memory tricks, and THM answers from the entire Operating Systems module.
@@ -27,285 +26,120 @@
 
 ## Quick Revision
 
-```
-Operating System
-↓
-Invisible Manager
-↓
-User
-↓
-Applications
-↓
-Operating System
-↓
-Hardware
+**How an Operating System Works**
 
-Kernel Space → Hardware Access
-User Space → Applications
+The operating system is the "invisible manager" between you and the machine. You interact with applications, the applications ask the OS for what they need, and the OS controls the hardware on their behalf.
 
-Applications
-↓
-System Calls
-↓
-Kernel
-```
+Flow: **User → Applications → Operating System → Hardware**
 
-**OS Responsibilities**
+- Applications never touch hardware directly — they request it through **system calls** to the **kernel**.
+- **Kernel Space** is the privileged core with direct hardware access; **User Space** is where normal applications run. Separating the two stops one crashing app from taking down the whole system.
 
-- Process
-- Memory
-- File
-- User
-- Device
-- Security
+**The 6 OS Responsibilities**
 
-```
-Windows Administration
-│
-├── Windows Update
-├── Install Apps
-├── Remove Apps
-├── Windows Settings
-├── Control Panel
-├── Task Manager
-├── Windows Security
-├── Virus Scan
-├── Windows Defender Firewall
-└── Secure Windows
-```
+- **Process management** — starts, schedules, and stops running programs.
+- **Memory management** — allocates RAM to each process.
+- **File management** — organises files and storage.
+- **User management** — accounts, authentication, and permissions.
+- **Device management** — drivers that let the OS talk to hardware.
+- **Security** — isolation, access control, and protection.
 
-```
-Operating System
-        │
-        ▼
-Controls Hardware
-        │
-        ▼
-Stores Sensitive Data
-        │
-        ▼
-Needs Security
-        │
-        ▼
-CIA Triad
-│
-├── Confidentiality
-├── Integrity
-└── Availability
-        │
-        ▼
-Weak Passwords
-Weak Permissions
-Malware
-        │
-        ▼
-SSH Login
-whoami
-ls
-cat
-history
-su
-        │
-        ▼
-Root Access
-```
+**Types of Operating Systems**
 
-## CMD & CLI Reference
+| Category | Examples |
+| --- | --- |
+| Desktop | Windows, macOS, Linux |
+| Server | Windows Server, Ubuntu Server, Red Hat |
+| Mobile | Android, iOS |
+| Embedded | OpenWRT, Ubuntu Core, FreeRTOS |
+| Cloud | Amazon Linux, Ubuntu Server |
+| Container | Alpine, Flatcar |
 
-**Windows CMD basics:**
+Every type exposes a **GUI** (click-based) and/or a **CLI** (command-based) interface, and underneath they all run a **kernel** that controls the **hardware**.
+
+**Why OS Security Matters**
+
+An OS controls the hardware and stores sensitive data, so it must be secured. Security is judged against the **CIA Triad — Confidentiality, Integrity, Availability**. The common weaknesses that break it are **weak passwords, weak permissions, and malware**. On Linux, a SOC analyst investigates after an SSH login with `whoami`, `ls`, `cat`, `history`, and `su` — and the attacker's ultimate goal is **root access**.
+
+**Windows Administration — What You Manage**
+
+| Task | Purpose |
+| --- | --- |
+| Windows Update | Install security patches |
+| Install / Remove Apps | Add or remove software (Microsoft Store or `.exe`/`.msi`) |
+| Windows Settings | Modern configuration tool |
+| Control Panel | Legacy administration interface |
+| Task Manager | Monitor processes and performance |
+| Windows Security | Protection against malware |
+| Windows Defender Firewall | Filter network traffic |
+| Secure Windows | The overall goal of all the above |
+
+## Command Reference
+
+**Windows CMD — Navigation & Files**
 
 | Command | Meaning |
 | --- | --- |
-| `CMD` | Windows Command Line |
-| `cd` | Change Directory |
-| `dir` | List Files |
-| `dir /a` | Show Hidden Files |
-| `dir /s` | Search File |
-| `type` | Read File |
+| `cd` | Change directory |
+| `dir` | List files |
+| `dir /a` | Show hidden files |
+| `dir /s` | Search for a file |
+| `type` | Read a file |
 
-Hidden Files ≠ Secret Files. SOC Analysts always inspect hidden files.
+Hidden files are not the same as secret files — SOC analysts always inspect hidden files.
 
-**System enumeration:**
+**Windows — System Enumeration**
 
-| Command | Meaning |
+| Command | Reveals |
 | --- | --- |
-| `whoami` | Current User |
-| `hostname` | Computer Name |
-| `systeminfo` | Complete Windows Information |
-| `ipconfig` | Network Configuration |
-| `ipconfig /all` | Detailed Network Information |
+| `whoami` | Current user |
+| `hostname` | Computer name |
+| `systeminfo` | Full Windows information |
+| `ipconfig` | Network configuration |
+| `ipconfig /all` | Detailed network information |
+
+**Windows — Environment Variables**
+
+| Variable | Points To |
+| --- | --- |
+| `%USERNAME%` | Current user name |
+| `%USERPROFILE%` | User's home folder |
+| `%TEMP%` | Temporary files |
+| `%APPDATA%` | Application data |
+| `%WINDIR%` | Windows install folder |
+
+**Windows — Filesystem Paths**
 
 | Path | Contents |
 | --- | --- |
-| `C:\Windows` | OS Files |
-| `C:\Users` | User Profiles |
-| `C:\Program Files` | Installed Software |
-| `C:\ProgramData` | Shared Application Data |
-| `C:\Temp` | Temporary Files |
+| `C:\Windows` | OS files |
+| `C:\Users` | User profiles |
+| `C:\Program Files` | Installed software |
+| `C:\ProgramData` | Shared application data |
+| `C:\Temp` | Temporary files |
 
-## One Shot Revision
+**Linux Commands**
 
-```
-Operating System
-↓
-GUI
-CLI
-↓
-Desktop
-Windows
-macOS
-Linux
-↓
-Server
-Windows Server
-Ubuntu Server
-Red Hat
-↓
-Mobile
-Android
-iOS
-↓
-Embedded
-OpenWRT
-Ubuntu Core
-↓
-Cloud
-Amazon Linux
-Ubuntu Server
-↓
-Container
-Alpine
-Flatcar
-↓
-Kernel
-↓
-Hardware
-```
+| Command | Meaning |
+| --- | --- |
+| `pwd` | Current directory |
+| `ls` | List files |
+| `ls -l` | Detailed list |
+| `ls -al` | Include hidden files |
+| `cd` | Change directory |
+| `cd ..` | Go back one level |
+| `find` | Search for files |
+| `cat` | Read a file |
+| `whoami` | Current user |
+| `uname` | OS name |
+| `uname -a` | Kernel information |
+| `df -h` | Disk usage |
+| `/etc` | Configuration files |
+| `os-release` | Linux version |
 
-```
-Operating System
-↓
-Bridge Between
-User
-↓
-Applications
-↓
-Kernel
-↓
-Hardware
+**SOC Investigation Order** — when enumerating a machine, work outward in this order:
 
-Responsibilities
-↓
-Process
-Memory
-Files
-Users
-Devices
-Security
-
-Interfaces
-↓
-GUI
-CLI
-
-Operating Systems
-↓
-Desktop
-↓
-Windows
-macOS
-Linux
-↓
-Server
-↓
-Ubuntu
-Red Hat
-Windows Server
-↓
-Mobile
-↓
-Android
-iOS
-↓
-Embedded
-↓
-OpenWRT
-FreeRTOS
-↓
-Cloud
-↓
-Amazon Linux
-Ubuntu Server
-↓
-Containers
-↓
-Alpine
-Flatcar
-```
-
-```
-pwd              → Current Directory
-ls               → List Files
-ls -l            → Detailed List
-ls -al           → Hidden Files
-cd               → Change Directory
-cd ..            → Back
-find             → Search
-cat              → Read File
-whoami           → Current User
-uname            → OS Name
-uname -a         → Kernel Info
-df -h            → Disk Usage
-/etc             → Configurations
-os-release       → Linux Version
-```
-
-```
-Windows CLI
-        │
-        ▼
-Navigation
-│
-├── cd
-├── dir
-├── dir /a
-├── dir /s
-└── type
-        │
-        ▼
-System Enumeration
-│
-├── whoami
-├── hostname
-├── systeminfo
-└── ipconfig
-        │
-        ▼
-Environment Variables
-│
-├── %USERNAME%
-├── %USERPROFILE%
-├── %TEMP%
-├── %APPDATA%
-└── %WINDIR%
-        │
-        ▼
-Investigation
-↓
-User
-↓
-Host
-↓
-OS
-↓
-Network
-↓
-Files
-↓
-Evidence
-↓
-Report
-```
+**User → Host → OS → Network → Files → Evidence → Report**
 
 ## TryHackMe Answers
 
