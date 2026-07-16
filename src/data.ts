@@ -790,7 +790,11 @@ export const MODULES_DATA: Module[] = [
           relevance: 'Knowing the intricacies of DNS, HTTP, and web architecture allows defenders to instantly recognize anomalous patterns and map them to specific attack vectors.'
         },
         mindmap: [
-          { id: 'chest-root', label: 'Mystery Chest', description: 'Rapid Revision', x: 50, y: 50 }
+          { id: 'chest-root', label: 'Mystery Chest', description: 'How the Web Works — rapid revision', x: 50, y: 15, connections: ['chest-dns', 'chest-http', 'chest-arch', 'chest-sec'] },
+          { id: 'chest-dns', label: 'DNS', description: 'Resolves domain names to IPs; Recursive, Root, TLD, Authoritative servers and TTL.', x: 20, y: 55 },
+          { id: 'chest-http', label: 'HTTP / HTTPS', description: 'Requests (GET/POST), responses, status codes; ports 80 and 443.', x: 40, y: 55 },
+          { id: 'chest-arch', label: 'Web Architecture', description: 'DNS, CDN, WAF, Load Balancer, Web Server, and Database working together.', x: 62, y: 55 },
+          { id: 'chest-sec', label: 'Attack Surface', description: 'Cookies/state, input validation (XSS), and logic flaws attackers probe.', x: 82, y: 55 }
         ],
         keyTakeaways: [
           'A thorough understanding of "How The Web Works" is the foundation for all web application penetration testing.',
@@ -1377,7 +1381,18 @@ export const MODULES_DATA: Module[] = [
         content: '',
         realWorldCallout: undefined,
         mindmap: [
-          { id: 'mc-root', label: 'Mystery Chest', description: 'Bonus Revision', x: 50, y: 25, connections: [] }
+          { id: 'mc-os-root', label: 'Mystery Chest', description: 'Operating Systems module revision', x: 50, y: 10, connections: ['mc-os-winbasics', 'mc-os-quick', 'mc-os-cmdref', 'mc-os-answers'] },
+          { id: 'mc-os-winbasics', label: 'Windows Basics', description: '1-minute Windows revision: GUI, accounts, Update, Task Manager, Defender.', x: 15, y: 45 },
+          { id: 'mc-os-quick', label: 'Quick Revision', description: 'Core OS concepts at a glance.', x: 40, y: 45, connections: ['mc-os-works', 'mc-os-resp', 'mc-os-types', 'mc-os-sec'] },
+          { id: 'mc-os-works', label: 'How an OS Works', description: 'User → Applications → OS → Hardware, via system calls to the kernel.', x: 25, y: 80 },
+          { id: 'mc-os-resp', label: '6 Responsibilities', description: 'Process, Memory, File, User, Device, and Security management.', x: 40, y: 80 },
+          { id: 'mc-os-types', label: 'OS Types', description: 'Desktop, Server, Mobile, Embedded, Cloud, Container.', x: 52, y: 80 },
+          { id: 'mc-os-sec', label: 'OS Security', description: 'CIA Triad; weak passwords, weak permissions, and malware.', x: 64, y: 80 },
+          { id: 'mc-os-cmdref', label: 'Command Reference', description: 'Windows CMD and Linux command cheat sheets.', x: 70, y: 45, connections: ['mc-os-wincmd', 'mc-os-linuxcmd', 'mc-os-soc'] },
+          { id: 'mc-os-wincmd', label: 'Windows CMD', description: 'cd, dir, whoami, hostname, systeminfo, ipconfig.', x: 78, y: 80 },
+          { id: 'mc-os-linuxcmd', label: 'Linux Commands', description: 'pwd, ls, cd, cat, whoami, uname, df -h.', x: 88, y: 80 },
+          { id: 'mc-os-soc', label: 'SOC Investigation', description: 'User → Host → OS → Network → Files → Evidence → Report.', x: 96, y: 80 },
+          { id: 'mc-os-answers', label: 'TryHackMe Answers', description: 'Lab task answers and flags for the module rooms.', x: 90, y: 45 }
         ],
         keyTakeaways: ['Review all key concepts before moving on.'],
         quiz: []
