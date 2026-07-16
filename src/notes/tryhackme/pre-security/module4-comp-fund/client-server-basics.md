@@ -61,8 +61,6 @@
 
 ---
 
-## Contents
----
 
 ## Overview
 Earlier computers worked independently. As technology evolved, systems started communicating over networks to share resources and services.

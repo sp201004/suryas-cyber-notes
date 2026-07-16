@@ -525,23 +525,14 @@ Example
 
 ```
 Application
-
 Open File
-
 ↓
-
 System Call
-
 ↓
-
 Kernel
-
 ↓
-
 Disk
-
 ↓
-
 Return Data
 ```
 
@@ -646,21 +637,13 @@ Organizes
 
 ```
 Disk
-
 ↓
-
 Folders
-
 ↓
-
 Files
-
 ↓
-
 Permissions
-
 ↓
-
 Metadata
 ```
 
@@ -720,17 +703,11 @@ Every hardware device needs a driver.
 
 ```
 Printer
-
 ↓
-
 Driver
-
 ↓
-
 Operating System
-
 ↓
-
 Application
 ```
 
@@ -836,17 +813,11 @@ against unauthorized changes.
 ## Remember OS Duties
 ```
 PMFUDS
-
 P → Process
-
 M → Memory
-
 F → File
-
 U → User
-
 D → Device
-
 S → Security
 ```
 
@@ -870,17 +841,11 @@ Remember
 
 ```
 Application
-
 ↓
-
 Request
-
 ↓
-
 Kernel
-
 ↓
-
 Hardware
 ```
 
@@ -1052,21 +1017,13 @@ The Operating System interprets every command.
 ## CLI Workflow
 ```
 User
-
 ↓
-
 Command
-
 ↓
-
 Shell
-
 ↓
-
 Operating System
-
 ↓
-
 Hardware
 ```
 
@@ -1511,27 +1468,16 @@ Different devices require different Operating Systems.
 
 ```
 Laptop
-
 ↓
-
 Desktop OS
-
 Phone
-
 ↓
-
 Mobile OS
-
 Router
-
 ↓
-
 Embedded OS
-
 Cloud
-
 ↓
-
 Server OS
 ```
 
@@ -1751,9 +1697,6 @@ Mint
 
 ---
 
-# Final Revision & Interview Guide
----
-
 # Important Commands (Preview)
 Although this room doesn't teach CLI commands in detail, you'll encounter these in the next rooms.
 
@@ -1797,7 +1740,7 @@ Remember:
 
 ---
 
-# Important Terminology
+# Important Terminology (Detailed)
 
 ## Operating System (OS)
 Software responsible for managing hardware, software, users, memory, storage and devices.
@@ -1999,63 +1942,34 @@ Operating System
 # Complete Architecture
 ```
                  USER
-
                    │
-
                    ▼
-
           Applications
-
                    │
-
              System Calls
-
                    │
-
                    ▼
-
 +--------------------------------+
-
 |          KERNEL SPACE          |
-
 |--------------------------------|
-
 | Process Manager                |
-
 | Memory Manager                 |
-
 | Scheduler                      |
-
 | Drivers                        |
-
 | File System                    |
-
 | Network Stack                  |
-
 +--------------------------------+
-
                    │
-
                    ▼
-
 +--------------------------------+
-
 |           HARDWARE             |
-
 |--------------------------------|
-
 | CPU                            |
-
 | RAM                            |
-
 | SSD                            |
-
 | GPU                            |
-
 | Network Card                   |
-
 | USB Devices                    |
-
 +--------------------------------+
 ```
 
@@ -2066,15 +1980,10 @@ Remember OS responsibilities
 
 ```
 P → Process
-
 M → Memory
-
 F → File
-
 U → User
-
 D → Device
-
 S → Security
 ```
 
@@ -2128,25 +2037,15 @@ Type Everything.
 ## Operating System Types
 ```
 Desktop
-
 ↓
-
 Server
-
 ↓
-
 Mobile
-
 ↓
-
 Embedded
-
 ↓
-
 Cloud
-
 Remember
-
 DSMEC
 ```
 
@@ -2325,48 +2224,29 @@ Execute
 
 ```
 Operating System
-
 ↓
-
 Invisible Manager
-
 ↓
-
 User
 ↓
-
 Applications
 ↓
-
 Operating System
 ↓
-
 Hardware
-
 Kernel Space → Hardware Access
-
 User Space → Applications
-
 Applications
 ↓
-
 System Calls
 ↓
-
 Kernel
-
 OS Responsibilities
-
 ✔ Process
-
 ✔ Memory
-
 ✔ File
-
 ✔ User
-
 ✔ Device
-
 ✔ Security
 ```
 
@@ -2378,70 +2258,38 @@ OS Responsibilities
 
 ```
 Operating System
-
 ↓
-
 GUI
 CLI
-
 ↓
-
 Desktop
-
 Windows
-
 macOS
-
 Linux
-
 ↓
-
 Server
-
 Windows Server
-
 Ubuntu Server
-
 Red Hat
-
 ↓
-
 Mobile
-
 Android
-
 iOS
-
 ↓
-
 Embedded
-
 OpenWRT
-
 Ubuntu Core
-
 ↓
-
 Cloud
-
 Amazon Linux
-
 Ubuntu Server
-
 ↓
-
 Container
-
 Alpine
-
 Flatcar
-
 ↓
-
 Kernel
-
 ↓
-
 Hardware
 ```
 
@@ -2449,115 +2297,60 @@ Hardware
 
 ```
 Operating System
-
 ↓
-
 Bridge Between
-
 User
-
 ↓
-
 Applications
-
 ↓
-
 Kernel
-
 ↓
-
 Hardware
-
 Responsibilities
-
 ↓
-
 ✔ Process
-
 ✔ Memory
-
 ✔ Files
-
 ✔ Users
-
 ✔ Devices
-
 ✔ Security
-
 Interfaces
-
 ↓
-
 GUI
-
 CLI
-
 Operating Systems
-
 ↓
-
 Desktop
-
 ↓
-
 Windows
-
 macOS
-
 Linux
-
 ↓
-
 Server
-
 ↓
-
 Ubuntu
-
 Red Hat
-
 Windows Server
-
 ↓
-
 Mobile
-
 ↓
-
 Android
-
 iOS
-
 ↓
-
 Embedded
-
 ↓
-
 OpenWRT
-
 FreeRTOS
-
 ↓
-
 Cloud
-
 ↓
-
 Amazon Linux
-
 Ubuntu Server
-
 ↓
-
 Containers
-
 ↓
-
 Alpine
-
 Flatcar
-
 ```
 
 ---

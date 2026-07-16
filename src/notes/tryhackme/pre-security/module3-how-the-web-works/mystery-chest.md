@@ -23,10 +23,6 @@
 
 ---
 
-## Room 2: HTTP in Detail
-
-## Room 3: How Websites Work
-
 ## Room 4: Putting It All Together
 
 ### Interview Revision

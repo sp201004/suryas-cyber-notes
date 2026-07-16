@@ -1,28 +1,15 @@
 ## Contents
 
-- [Operating Systems: Introduction](#operating-systems-introduction)
-- [Final Revision & Interview Guide](#final-revision-&-interview-guide)
-- [Windows Basics](#windows-basics)
-- [Final 1-Minute Revision](#final-1-minute-revision)
-- [# Linux CLI Basics](##-linux-cli-basics)
-- [# Windows CLI Basics](##-windows-cli-basics)
-- [Unknown](#unknown)
+- [Windows Basics — 1-Minute Revision](#windows-basics--1-minute-revision)
 - [Quick Revision](#quick-revision)
+- [CMD & CLI Reference](#cmd--cli-reference)
 - [One Shot Revision](#one-shot-revision)
 - [TryHackMe Answers](#tryhackme-answers)
 
 > **Bonus Notes**: This is a centralized collection of all quick revision sections, memory tricks, and THM answers from the entire Operating Systems module.
 
-## Operating Systems: Introduction 
+## Windows Basics — 1-Minute Revision
 
-## Operating Systems: Introduction 
-
-# Final Revision & Interview Guide
----
-
-## Windows Basics 
-
-# Final 1-Minute Revision
 - Windows is a GUI-based operating system.
 - Authentication verifies user identity.
 - Guest < Standard < Administrator.
@@ -38,144 +25,54 @@
 - Windows Defender Firewall filters network traffic.
 - EICAR is a safe antivirus test file.
 
----
-
----
-
-## # Linux CLI Basics 
-
-## # Windows CLI Basics 
-
-## # Windows CLI Basics 
-
-## # Windows CLI Basics 
-
-## Unknown
-
 ## Quick Revision
 
 ```
 Operating System
-
 ↓
-
 Invisible Manager
-
 ↓
-
 User
 ↓
-
 Applications
 ↓
-
 Operating System
 ↓
-
 Hardware
 
 Kernel Space → Hardware Access
-
 User Space → Applications
 
 Applications
 ↓
-
 System Calls
 ↓
-
 Kernel
-
-OS Responsibilities
-
-✔ Process
-
-✔ Memory
-
-✔ File
-
-✔ User
-
-✔ Device
-
-✔ Security
 ```
 
----
+**OS Responsibilities**
 
----
+- Process
+- Memory
+- File
+- User
+- Device
+- Security
 
 ```
 Windows Administration
-
 │
-
 ├── Windows Update
-
 ├── Install Apps
-
 ├── Remove Apps
-
 ├── Windows Settings
-
 ├── Control Panel
-
 ├── Task Manager
-
 ├── Windows Security
-
 ├── Virus Scan
-
 ├── Windows Defender Firewall
-
 └── Secure Windows
 ```
-
----
-
- CMD = Windows Command Line
-
- cd = Change Directory
-
- dir = List Files
-
- dir /a = Show Hidden Files
-
- dir /s = Search File
-
- type = Read File
-
- Hidden Files ≠ Secret Files
-
- SOC Analysts always inspect hidden files.
-
----
-
----
-
- whoami → Current User
-
- hostname → Computer Name
-
- systeminfo → Complete Windows Information
-
- ipconfig → Network Configuration
-
- ipconfig /all → Detailed Network Information
-
- C:\Windows → OS Files
-
- C:\Users → User Profiles
-
- C:\Program Files → Installed Software
-
- C:\ProgramData → Shared Application Data
-
- C:\Temp → Temporary Files
-
----
-
----
 
 ```
 Operating System
@@ -213,403 +110,202 @@ su
 Root Access
 ```
 
----
+## CMD & CLI Reference
 
----
+**Windows CMD basics:**
+
+| Command | Meaning |
+| --- | --- |
+| `CMD` | Windows Command Line |
+| `cd` | Change Directory |
+| `dir` | List Files |
+| `dir /a` | Show Hidden Files |
+| `dir /s` | Search File |
+| `type` | Read File |
+
+Hidden Files ≠ Secret Files. SOC Analysts always inspect hidden files.
+
+**System enumeration:**
+
+| Command | Meaning |
+| --- | --- |
+| `whoami` | Current User |
+| `hostname` | Computer Name |
+| `systeminfo` | Complete Windows Information |
+| `ipconfig` | Network Configuration |
+| `ipconfig /all` | Detailed Network Information |
+
+| Path | Contents |
+| --- | --- |
+| `C:\Windows` | OS Files |
+| `C:\Users` | User Profiles |
+| `C:\Program Files` | Installed Software |
+| `C:\ProgramData` | Shared Application Data |
+| `C:\Temp` | Temporary Files |
 
 ## One Shot Revision
 
 ```
 Operating System
-
 ↓
-
 GUI
 CLI
-
 ↓
-
 Desktop
-
 Windows
-
 macOS
-
 Linux
-
 ↓
-
 Server
-
 Windows Server
-
 Ubuntu Server
-
 Red Hat
-
 ↓
-
 Mobile
-
 Android
-
 iOS
-
 ↓
-
 Embedded
-
 OpenWRT
-
 Ubuntu Core
-
 ↓
-
 Cloud
-
 Amazon Linux
-
 Ubuntu Server
-
 ↓
-
 Container
-
 Alpine
-
 Flatcar
-
 ↓
-
 Kernel
-
 ↓
-
 Hardware
 ```
-
----
 
 ```
 Operating System
-
 ↓
-
 Bridge Between
-
 User
-
 ↓
-
 Applications
-
 ↓
-
 Kernel
-
 ↓
-
 Hardware
 
 Responsibilities
-
 ↓
-
-✔ Process
-
-✔ Memory
-
-✔ Files
-
-✔ Users
-
-✔ Devices
-
-✔ Security
+Process
+Memory
+Files
+Users
+Devices
+Security
 
 Interfaces
-
 ↓
-
 GUI
-
 CLI
 
 Operating Systems
-
 ↓
-
 Desktop
-
 ↓
-
 Windows
-
 macOS
-
 Linux
-
 ↓
-
 Server
-
 ↓
-
 Ubuntu
-
 Red Hat
-
 Windows Server
-
 ↓
-
 Mobile
-
 ↓
-
 Android
-
 iOS
-
 ↓
-
 Embedded
-
 ↓
-
 OpenWRT
-
 FreeRTOS
-
 ↓
-
 Cloud
-
 ↓
-
 Amazon Linux
-
 Ubuntu Server
-
 ↓
-
 Containers
-
 ↓
-
 Alpine
-
 Flatcar
-
 ```
 
----
-
 ```
-pwd
-
-↓
-
-Current Directory
-
-------------------
-
-ls
-
-↓
-
-List Files
-
-------------------
-
-ls -l
-
-↓
-
-Detailed List
-
-------------------
-
-ls -al
-
-↓
-
-Hidden Files
-
-------------------
-
-cd
-
-↓
-
-Change Directory
-
-------------------
-
-cd ..
-
-↓
-
-Back
-
-------------------
-
-find
-
-↓
-
-Search
-
-------------------
-
-cat
-
-↓
-
-Read File
-
-------------------
-
-whoami
-
-↓
-
-Current User
-
-------------------
-
-uname
-
-↓
-
-OS Name
-
-------------------
-
-uname -a
-
-↓
-
-Kernel Info
-
-------------------
-
-df -h
-
-↓
-
-Disk Usage
-
-------------------
-
-/etc
-
-↓
-
-Configurations
-
-------------------
-
-os-release
-
-↓
-
-Linux Version
+pwd              → Current Directory
+ls               → List Files
+ls -l            → Detailed List
+ls -al           → Hidden Files
+cd               → Change Directory
+cd ..            → Back
+find             → Search
+cat              → Read File
+whoami           → Current User
+uname            → OS Name
+uname -a         → Kernel Info
+df -h            → Disk Usage
+/etc             → Configurations
+os-release       → Linux Version
 ```
-
----
 
 ```
 Windows CLI
-
         │
-
         ▼
-
 Navigation
-
 │
-
 ├── cd
-
 ├── dir
-
 ├── dir /a
-
 ├── dir /s
-
 └── type
-
         │
-
         ▼
-
 System Enumeration
-
 │
-
 ├── whoami
-
 ├── hostname
-
 ├── systeminfo
-
 └── ipconfig
-
         │
-
         ▼
-
 Environment Variables
-
 │
-
 ├── %USERNAME%
-
 ├── %USERPROFILE%
-
 ├── %TEMP%
-
 ├── %APPDATA%
-
 └── %WINDIR%
-
         │
-
         ▼
-
 Investigation
-
 ↓
-
 User
-
 ↓
-
 Host
-
 ↓
-
 OS
-
 ↓
-
 Network
-
 ↓
-
 Files
-
 ↓
-
 Evidence
-
 ↓
-
 Report
 ```
-
----
 
 ## TryHackMe Answers
 
@@ -623,12 +319,6 @@ Report
 | User Directories | 3 |
 | Flag | THM{new_pc_for_free!} |
 
----
-
----
-
----
-
 | Question | Answer |
 |----------|--------|
 | Hidden file location | `.secret` / hidden folder (lab specific) |
@@ -639,7 +329,3 @@ Report
 | Flag | *(Use the exact flag shown in your room after completing the tasks.)* |
 
 > **Note:** Some values (hostname, IP address, final flag) may vary depending on the TryHackMe instance. Record the values shown in your own VM.
-
----
-
----
