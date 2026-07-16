@@ -377,6 +377,18 @@ const renderCodeLines = (lang: string, content: string): React.ReactNode => {
   }
 };
 
+// Wide ASCII diagrams (e.g. an annotated Suricata rule line ~120 cols) overflow
+// at the default text-xs, cutting off content behind a scrollbar. Shrink the
+// font responsively so the whole diagram fits on desktop while staying readable
+// (and horizontally scrollable) on mobile. Alignment is preserved — the block
+// stays whitespace-pre monospace, so column-aligned annotations line up.
+const diagramFontClass = (text: string): string => {
+  const maxLen = text.split('\n').reduce((m, l) => Math.max(m, l.length), 0);
+  if (maxLen > 110) return 'text-[10px] md:text-[11px]';
+  if (maxLen > 84) return 'text-[11px] md:text-xs';
+  return 'text-xs';
+};
+
 // Does a fenced block contain GENUINE diagram structure (boxes, flows, trees,
 // aligned columns)? If so it must stay an atomic monospace card. This is the
 // guardrail for the "fake diagram" rule below — when in doubt this returns
@@ -1209,7 +1221,7 @@ const markdownComponents: import('react-markdown').Components = {
             seg.type === 'diagram' ? (
               <div
                 key={i}
-                className="font-mono text-xs bg-[#111827]/90 border-l-4 border-[#9fef00] p-4 rounded-r-lg my-4 overflow-x-auto whitespace-pre leading-relaxed text-gray-300 shadow-[0_0_15px_rgba(159,239,0,0.03)] border-y border-r border-[#2d3a54]/40 select-all"
+                className={`font-mono ${diagramFontClass(seg.text)} bg-[#111827]/90 border-l-4 border-[#9fef00] p-4 rounded-r-lg my-4 overflow-x-auto whitespace-pre leading-relaxed text-gray-300 shadow-[0_0_15px_rgba(159,239,0,0.03)] border-y border-r border-[#2d3a54]/40 select-all`}
               >
                 {seg.text}
               </div>
@@ -1230,7 +1242,7 @@ const markdownComponents: import('react-markdown').Components = {
     // content is preserved exactly as written in the source. Horizontal scroll
     // (whitespace-pre) keeps ASCII alignment intact for diagrams.
     return (
-      <div className="font-mono text-xs bg-[#111827]/90 border-l-4 border-[#9fef00] p-4 rounded-r-lg my-4 overflow-x-auto whitespace-pre leading-relaxed text-gray-300 shadow-[0_0_15px_rgba(159,239,0,0.03)] border-y border-r border-[#2d3a54]/40 select-all">
+      <div className={`font-mono ${diagramFontClass(content)} bg-[#111827]/90 border-l-4 border-[#9fef00] p-4 rounded-r-lg my-4 overflow-x-auto whitespace-pre leading-relaxed text-gray-300 shadow-[0_0_15px_rgba(159,239,0,0.03)] border-y border-r border-[#2d3a54]/40 select-all`}>
         {content}
       </div>
     );

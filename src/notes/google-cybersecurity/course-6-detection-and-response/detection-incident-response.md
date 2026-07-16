@@ -184,40 +184,23 @@
 
 ## SIEM vs. SOAR — The Operations Backbone
 
-> **SIEM + SOAR — How They Work Together**
-> **SIEM (Security Information and Event Management)**
-> **'THE DASHBOARD'**
 
-```
-  +----------------------------------------------------------+
-  | STEP 1: COLLECT & AGGREGATE                              |
-  | Pull raw data from: firewalls, routers, laptops, servers |
-  | into one massive centralized database.                   |
-  +----------------------------------------------------------+
-  | STEP 2: NORMALIZE (Parsing)                              |
-  | Convert logs from different vendors (Cisco, Windows, Mac)|
-  | into one universal language for unified searching.       |
-  | Parsing: 'Failed password from 192.168.1.5' becomes:     |
-  |   Event=Failed_Login, IP=192.168.1.5, Time=14:32:01      |
-  +----------------------------------------------------------+
-  | STEP 3: CORRELATE & ALERT                                |
-  | Connect the dots across separate events.                 |
-  | Example: 5 failed logins on web server + 1 success on DB |
-  | from SAME IP = one high-priority brute force alert.      |
-  +----------------------------------------------------------+
+**SIEM (Security Information and Event Management) — 'THE DASHBOARD'**
 
-  SOAR (Security Orchestration, Automation, and Response)
-  'THE AUTOPILOT'
-  +----------------------------------------------------------+
-  | SIEM triggers alert for malicious IP address.            |
-  | SOAR receives alert, runs automated playbook:            |
-  |   1. Looks up IP in threat intelligence feeds            |
-  |   2. Logs into firewall, adds block rule                 |
-  |   3. Opens ServiceNow incident ticket                    |
-  |   4. Sends Slack alert to SOC team                       |
-  | Total time: 3 seconds. Manual equivalent: 20 minutes.    |
-  +----------------------------------------------------------+
-```
+- **STEP 1: COLLECT & AGGREGATE** — Pull raw data from: firewalls, routers, laptops, servers into one massive centralized database.
+- **STEP 2: NORMALIZE (Parsing)** — Convert logs from different vendors (Cisco, Windows, Mac) into one universal language for unified searching. Parsing: 'Failed password from 192.168.1.5' becomes: Event=Failed_Login, IP=192.168.1.5, Time=14:32:01
+- **STEP 3: CORRELATE & ALERT** — Connect the dots across separate events. Example: 5 failed logins on web server + 1 success on DB from SAME IP = one high-priority brute force alert.
+
+**SOAR (Security Orchestration, Automation, and Response) — 'THE AUTOPILOT'**
+
+SIEM triggers alert for malicious IP address. SOAR receives alert, runs automated playbook:
+
+1. Looks up IP in threat intelligence feeds
+2. Logs into firewall, adds block rule
+3. Opens ServiceNow incident ticket
+4. Sends Slack alert to SOC team
+
+Total time: 3 seconds. Manual equivalent: 20 minutes.
 
 ## Quick Revision
 

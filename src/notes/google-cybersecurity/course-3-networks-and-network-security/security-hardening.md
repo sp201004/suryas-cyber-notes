@@ -17,40 +17,18 @@
 > 
 > The House Analogy: Your network is a house. The attack surface is every window, door, mail slot, and loose brick. Hardening = adding deadbolts, window locks, an alarm system, security cameras, and a guard dog.
 
-> **DEFENSE-IN-DEPTH — 5 Hardening Layers**
-> **DEFENSE-IN-DEPTH: No single tool stops every attack. LAYER your defenses.**
-> **LAYER 5: PHYSICAL SECURITY**
 
-```
-  +------------------------------------------------------------------+
-  | Biometric access, CCTV, guards, server cages, locked racks       |
-  | Prevents: physical theft, unauthorized hardware access           |
-  +------------------------------------------------------------------+
-  LAYER 4: NETWORK HARDENING
-  +------------------------------------------------------------------+
-  | Firewalls, IDS/IPS, network segmentation, VPN, VLAN isolation    |
-  | Prevents: external intrusion, lateral movement, eavesdropping    |
-  +------------------------------------------------------------------+
-  LAYER 3: OS HARDENING
-  +------------------------------------------------------------------+
-  | Patch management, baseline configs, MFA, minimal services        |
-  | Prevents: OS exploits, credential attacks, privilege escalation  |
-  +------------------------------------------------------------------+
-  LAYER 2: APPLICATION HARDENING
-  +------------------------------------------------------------------+
-  | Input validation, secure coding, WAF, dependency scanning        |
-  | Prevents: SQL injection, XSS, RCE via vulnerable libraries       |
-  +------------------------------------------------------------------+
-  LAYER 1: CLOUD HARDENING
-  +------------------------------------------------------------------+
-  | IAM policies, encryption, shared responsibility model, CSPM      |
-  | Prevents: data exposure, misconfigured cloud services            |
-  +------------------------------------------------------------------+
+**DEFENSE-IN-DEPTH:** No single tool stops every attack. LAYER your defenses.
 
-  If attacker breaches Layer 4 (network firewall), Layer 3 (OS hardening)
-  still stops them. If they bypass Layer 3, Layer 2 (app security) catches them.
-  No single failure = total compromise. Multiple failures required.
-```
+| **Layer** | **Controls** | **Prevents** |
+| --- | --- | --- |
+| LAYER 5: PHYSICAL SECURITY | Biometric access, CCTV, guards, server cages, locked racks | physical theft, unauthorized hardware access |
+| LAYER 4: NETWORK HARDENING | Firewalls, IDS/IPS, network segmentation, VPN, VLAN isolation | external intrusion, lateral movement, eavesdropping |
+| LAYER 3: OS HARDENING | Patch management, baseline configs, MFA, minimal services | OS exploits, credential attacks, privilege escalation |
+| LAYER 2: APPLICATION HARDENING | Input validation, secure coding, WAF, dependency scanning | SQL injection, XSS, RCE via vulnerable libraries |
+| LAYER 1: CLOUD HARDENING | IAM policies, encryption, shared responsibility model, CSPM | data exposure, misconfigured cloud services |
+
+If attacker breaches Layer 4 (network firewall), Layer 3 (OS hardening) still stops them. If they bypass Layer 3, Layer 2 (app security) catches them. No single failure = total compromise. Multiple failures required.
 
 ## Operating System Hardening
 
@@ -105,33 +83,29 @@
 
 ### C. Strong Authentication — Defending the Login Portal
 
-> **STRONG AUTHENTICATION — Password Policy + MFA**
-> **Authentication Portal: The #1 target for attackers.**
-> **Most breaches begin with a compromised account.**
-> **STRONG PASSWORD POLICY REQUIREMENTS:**
 
-```
-  +------------------------------------------------------------+
-  | Minimum length:    12-16 characters (longer = stronger)    |
-  | Complexity:        Upper + lower + numbers + symbols       |
-  | No dictionary words: 'Password123' cracked in seconds      |
-  | No reuse:          Cannot reuse last 12 passwords          |
-  | Expiry:            Force reset every 90 days (contested)   |
-  | Lockout:           Lock 15 minutes after 5 failed attempts |
-  +------------------------------------------------------------+
+**Authentication Portal:** The #1 target for attackers. Most breaches begin with a compromised account.
 
-  MFA (Multi-Factor Authentication) -- THREE FACTORS:
-  +---------------------------+
-  | SOMETHING YOU KNOW        | Password, PIN, security question
-  +---------------------------+ Weakness: phishable, guessable
-  | SOMETHING YOU HAVE        | Authenticator app OTP, YubiKey
-  +---------------------------+ Strength: physical device required
-  | SOMETHING YOU ARE         | Fingerprint, Face ID, iris scan
-  +---------------------------+ Strength: cannot be shared/stolen easily
+**STRONG PASSWORD POLICY REQUIREMENTS:**
 
-  Combining any TWO factors stops 99.9% of automated credential attacks.
-  (Microsoft Security report: MFA blocks 99.9% of account compromise attempts)
-```
+| **Requirement** | **Policy** |
+| --- | --- |
+| Minimum length | 12-16 characters (longer = stronger) |
+| Complexity | Upper + lower + numbers + symbols |
+| No dictionary words | 'Password123' cracked in seconds |
+| No reuse | Cannot reuse last 12 passwords |
+| Expiry | Force reset every 90 days (contested) |
+| Lockout | Lock 15 minutes after 5 failed attempts |
+
+**MFA (Multi-Factor Authentication) — THREE FACTORS:**
+
+| **Factor** | **Examples** | **Note** |
+| --- | --- | --- |
+| SOMETHING YOU KNOW | Password, PIN, security question | Weakness: phishable, guessable |
+| SOMETHING YOU HAVE | Authenticator app OTP, YubiKey | Strength: physical device required |
+| SOMETHING YOU ARE | Fingerprint, Face ID, iris scan | Strength: cannot be shared/stolen easily |
+
+Combining any TWO factors stops 99.9% of automated credential attacks. (Microsoft Security report: MFA blocks 99.9% of account compromise attempts)
 
 ## Defeating Credential Attacks
 

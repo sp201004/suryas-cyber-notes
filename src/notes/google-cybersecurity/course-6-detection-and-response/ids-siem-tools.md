@@ -117,17 +117,17 @@
 > **STRUCTURE: Fields separated by pipe characters |. Key-value pairs after.**
 
 ```
-    CEF:1|PaloAlto|ThreatAppliance|10.0|1012|SQL Injection Attempt Blocked|10|src=192.168.10.45 dst=172.21.224.5
-  |    | |        |              |    |    |                              |  |
-  |    | |        |              |    |    |                              |  +-- Extension (key=value pairs)
-  |    | |        |              |    |    |                              +-- Severity (0-10, 10=max)
-  |    | |        |              |    |    +-- Event Name
-  |    | |        |              |    +-- Event Class ID
-  |    | |        |              +-- Device Version
-  |    | |        +-- Device Product
-  |    | +-- Device Vendor
-  |    +-- CEF Version
-  +-- Format identifier
+CEF:1|PaloAlto|ThreatAppliance|10.0|1012|SQL Injection Attempt Blocked|10|src=192.168.10.45 dst=172.21.224.5
+|   | |        |               |    |    |                             |  |
+|   | |        |               |    |    |                             |  +-- Extension (key=value pairs)
+|   | |        |               |    |    |                             +-- Severity (0-10, 10=max)
+|   | |        |               |    |    +-- Event Name
+|   | |        |               |    +-- Event Class ID
+|   | |        |               +-- Device Version
+|   | |        +-- Device Product
+|   | +-- Device Vendor
+|   +-- CEF Version
++-- Format identifier
 
   READING: PaloAlto firewall blocked a SQL injection attempt from
   192.168.10.45 targeting 172.21.224.5. Severity: 10 (maximum).
@@ -153,8 +153,6 @@
 > Integrates directly with SIEM tools (Splunk, Chronicle, Elastic Stack).
 > Can operate as IDS (alert only) OR IPS (alert + block) depending on configuration.
 
-> **SURICATA RULE ANATOMY:**
-
 ```
   alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"GET on wire"; flow:established,to_server; content:"GET"; sid:12345; rev:3;)
   |     |    |          |  |  |             |   |                                                      
@@ -166,20 +164,24 @@
   |     |    +-- Source IP ($HOME_NET = your internal network)
   |     +-- Protocol (http, tcp, udp, icmp, dns, tls)
   +-- ACTION (alert, pass, drop, reject)
-
-  RULE OPTIONS EXPLAINED:
-  msg:"text"          -- Alert message displayed when rule triggers
-  flow:established    -- Only match on established TCP sessions (stateful)
-  content:"GET"       -- Deep Packet Inspection: look for 'GET' in payload
-  sid:12345           -- Unique Signature ID (every rule must have one)
-  rev:3               -- Revision number (increment when rule is updated)
-
-  ACTION PRIORITY ORDER (when rules conflict):
-  1. PASS (highest priority -- allow through)
-  2. DROP (silently discard packet)
-  3. REJECT (discard + send RST to sender)
-  4. ALERT (lowest -- generate alert, allow through)
 ```
+
+**RULE OPTIONS EXPLAINED:**
+
+| **Option** | **Purpose** |
+| --- | --- |
+| `msg:"text"` | Alert message displayed when rule triggers |
+| `flow:established` | Only match on established TCP sessions (stateful) |
+| `content:"GET"` | Deep Packet Inspection: look for 'GET' in payload |
+| `sid:12345` | Unique Signature ID (every rule must have one) |
+| `rev:3` | Revision number (increment when rule is updated) |
+
+**ACTION PRIORITY ORDER (when rules conflict):**
+
+1. **PASS** (highest priority -- allow through)
+2. **DROP** (silently discard packet)
+3. **REJECT** (discard + send RST to sender)
+4. **ALERT** (lowest -- generate alert, allow through)
 
 > **SURICATA LOG FILES:**
 > **fast.log:** Legacy minimal plaintext format. Quick human reading.

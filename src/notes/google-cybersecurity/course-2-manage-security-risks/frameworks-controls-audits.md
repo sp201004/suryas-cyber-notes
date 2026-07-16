@@ -71,7 +71,7 @@
 ### Encryption: Plaintext vs. Ciphertext
 
 > **ENCRYPTION FLOW — Protecting Data in Transit**
-> **SENDER                                                   RECEIVER**
+> **SENDER                                                    RECEIVER**
 
 ```
   ┌──────────────────┐                                    ┌──────────────────┐
@@ -93,27 +93,16 @@
 
 ### Authentication & MFA — Three Factors
 
-> **MFA — THREE AUTHENTICATION FACTORS**
-> **MFA GATE — All factors must pass for access to be granted**
 
-```
-  ┌─────────────────────────────────────────────────────────────┐
-  │ Factor 1: SOMETHING YOU KNOW                                │
-  │  Password, PIN, Security Question, Passphrase               │
-  │  Weakness: Can be guessed, phished, or data-breached        │
-  ├─────────────────────────────────────────────────────────────┤
-  │ Factor 2: SOMETHING YOU HAVE                                │
-  │  Authenticator app OTP, Hardware key (YubiKey), Smart card  │
-  │  Strength: Attacker must physically steal your device       │
-  ├─────────────────────────────────────────────────────────────┤
-  │ Factor 3: SOMETHING YOU ARE                                 │
-  │  Fingerprint, Face ID, Iris scan, Palm vein pattern         │
-  │  Strength: Biometrics cannot be 'forgotten' or 'shared'     │
-  └─────────────────────────────────────────────────────────────┘
+**MFA GATE — All factors must pass for access to be granted**
 
-  Combining 2+ factors makes attacks exponentially harder.
-  Even if your password leaks, attacker still cannot pass Factor 2 or 3.
-```
+| **Factor** | **Examples** | **Note** |
+| --- | --- | --- |
+| Factor 1: SOMETHING YOU KNOW | Password, PIN, Security Question, Passphrase | Weakness: Can be guessed, phished, or data-breached |
+| Factor 2: SOMETHING YOU HAVE | Authenticator app OTP, Hardware key (YubiKey), Smart card | Strength: Attacker must physically steal your device |
+| Factor 3: SOMETHING YOU ARE | Fingerprint, Face ID, Iris scan, Palm vein pattern | Strength: Biometrics cannot be 'forgotten' or 'shared' |
+
+Combining 2+ factors makes attacks exponentially harder. Even if your password leaks, attacker still cannot pass Factor 2 or 3.
 
 > **⚠️ Advanced Threat: Vishing (Voice Phishing)**
 > AI voice-cloning technology now allows attackers to perfectly replicate a CEO's voice. They call an employee posing as the CEO and say: 'I'm stuck in a meeting — I need you to bypass MFA and approve this wire transfer immediately. Don't tell anyone.'

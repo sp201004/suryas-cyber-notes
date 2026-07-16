@@ -79,33 +79,12 @@
 
 ## Packet Anatomy — Header, Payload, Footer
 
-> **PACKET ANATOMY — Header / Payload / Footer**
-> **ANATOMY OF A NETWORK DATA PACKET:**
 
-```
-  +----------------------------------------------------------------+
-  | HEADER (20-60 bytes)                                           |
-  | Contains routing and control information:                      |
-  |   Source IP: 192.168.1.10    Destination IP: 10.0.0.5          |
-  |   Protocol: TCP (6)          TTL: 64                           |
-  |   Length: 250 bytes          ID/Flags: for fragmentation       |
-  |   Checksum: 0x4A2B           ToS: 0x00                         |
-  +----------------------------------------------------------------+
-  | PAYLOAD (variable size)                                        |
-  | The ACTUAL data being transmitted:                             |
-  |   Website HTML content, image bytes, file data,                |
-  |   email body text, database query results.                     |
-  |   Often ENCRYPTED (TLS) -- appears as ciphertext.              |
-  +----------------------------------------------------------------+
-  | FOOTER / TRAILER (Layer 2 only)                                |
-  | Frame Check Sequence (FCS) for error detection.                |
-  | Used by Ethernet (Layer 2). IP (Layer 3) does NOT use footers. |
-  +----------------------------------------------------------------+
-
-  PCAP FILES (.pcap): Snapshots of captured packets stored on disk.
-  libpcap: Unix/Linux/macOS packet capture library (used by tcpdump).
-  WinPcap/Npcap: Windows packet capture library (used by Wireshark).
-```
+| **Part** | **Contents** |
+| --- | --- |
+| HEADER (20-60 bytes) | Routing and control information: Source IP: 192.168.1.10, Destination IP: 10.0.0.5, Protocol: TCP (6), TTL: 64, Length: 250 bytes, ID/Flags: for fragmentation, Checksum: 0x4A2B, ToS: 0x00 |
+| PAYLOAD (variable size) | The ACTUAL data being transmitted: Website HTML content, image bytes, file data, email body text, database query results. Often ENCRYPTED (TLS) — appears as ciphertext. |
+| FOOTER / TRAILER (Layer 2 only) | Frame Check Sequence (FCS) for error detection. Used by Ethernet (Layer 2). IP (Layer 3) does NOT use footers. |
 
 ## tcpdump — Command-Line Packet Analysis
 

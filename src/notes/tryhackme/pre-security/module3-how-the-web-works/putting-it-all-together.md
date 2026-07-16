@@ -124,7 +124,7 @@ Browser receives: Hello Adam
 The browser never sees the PHP code.
 
 ## Final Request Order (Important)
-```text
+
 1. User requests website in browser
 2. Browser checks Local DNS Cache
 3. Query Recursive DNS Server
@@ -138,7 +138,6 @@ The browser never sees the PHP code.
 11. Backend communicates with Database
 12. Server sends HTML + CSS + JavaScript
 13. Browser renders the website
-```
 
 ## Quiz Answers
 | Task | Answers |
