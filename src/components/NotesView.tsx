@@ -681,6 +681,57 @@ const extractTrailingProse = (content: string): string[] => {
   return proseLines;
 };
 
+// Extract plain text from a hast node (for table-header classification).
+const hastText = (n: any): string => {
+  if (!n) return '';
+  if (n.type === 'text') return n.value || '';
+  if (Array.isArray(n.children)) return n.children.map(hastText).join('');
+  return '';
+};
+const getTableHeaders = (node: any): string[] => {
+  const thead = node?.children?.find((c: any) => c.tagName === 'thead');
+  const tr = thead?.children?.find((c: any) => c.tagName === 'tr');
+  if (!tr) return [];
+  return (tr.children || []).filter((c: any) => c.tagName === 'th').map((th: any) => hastText(th).trim());
+};
+// Typical KEY/VALUE headers. If a 2-col table has one of these, col 1 is a
+// label column and stays bold. Anything else with exactly 2 columns is a
+// side-by-side COMPARISON (both columns equal weight).
+const KEY_FIRST = new Set(['field','term','feature','category','pillar','type','threat type','name','question','concept','aspect','metric','command','flag','port','port number','property','key','attribute','setting','parameter','step','stage','layer','algorithm','ip version','header field','join type','service model','psychological trigger','scenario','item','use case','role','phase','level','function','method','tool','resource','goal','model','control','indicator','technique','tactic','protocol','service','action','event','distro','factor','principle','domain','framework','standard','record type','status','state','difficulty','os','hash','filter','keyword','sensor','component','area','topic','concept/term']);
+const VALUE_SECOND = new Set(['definition','detail','details','answer','purpose','meaning','description','example','examples','value','function','notes','note','use case','security context','why it matters','why analysts watch it','security note','what it contains','what you get','how it works','returns','explanation','result']);
+
+// Average word count of the first two body columns (for label→value detection).
+const tableColAvgWords = (node: any): { c0: number; c1: number } => {
+  const tbody = node?.children?.find((c: any) => c.tagName === 'tbody');
+  const rows = (tbody?.children || []).filter((c: any) => c.tagName === 'tr');
+  let s0 = 0, s1 = 0, n = 0;
+  for (const tr of rows) {
+    const tds = (tr.children || []).filter((c: any) => c.tagName === 'td');
+    if (tds.length < 2) continue;
+    s0 += hastText(tds[0]).trim().split(/\s+/).filter(Boolean).length;
+    s1 += hastText(tds[1]).trim().split(/\s+/).filter(Boolean).length;
+    n++;
+  }
+  return n ? { c0: s0 / n, c1: s1 / n } : { c0: 0, c1: 0 };
+};
+
+// A 2-column table is a COMPARISON (equal-weight columns) unless:
+//  - its headers look key/value (KEY_FIRST / VALUE_SECOND), or
+//  - column 1 is a short label and column 2 is a long description
+//    (e.g. numbered/step tables: "1" → paragraph).
+// >2 columns is always key/value (bold first column).
+const isComparisonTable = (node: any): boolean => {
+  const h = getTableHeaders(node);
+  if (h.length !== 2) return false;
+  const first = h[0].replace(/\*/g, '').trim();
+  if (first === '' || /^\d+$/.test(first)) return false;   // numbered/step or blank-header = key/value
+  const h0 = h[0].toLowerCase(), h1 = h[1].toLowerCase();
+  if (KEY_FIRST.has(h0) || VALUE_SECOND.has(h1)) return false;
+  const { c0, c1 } = tableColAvgWords(node);
+  if (c0 <= 3 && c1 >= 6) return false;   // label → description = key/value
+  return true;
+};
+
 const markdownComponents: import('react-markdown').Components = {
   h1: ({node, children, ...props}) => {
     const rawText = extractText(children);
@@ -894,13 +945,20 @@ const markdownComponents: import('react-markdown').Components = {
       </div>
     </div>
   ),
-  table: ({node, children, ...props}) => (
-    <div className="my-6 overflow-hidden rounded-xl border border-[#2d3a54] shadow-md shadow-black/20 [&_tbody_td:first-child]:font-semibold [&_tbody_td:first-child]:text-gray-100">
-      <table className="w-full text-left border-collapse font-sans text-xs" {...props}>
-        {children}
-      </table>
-    </div>
-  ),
+  table: ({node, children, ...props}) => {
+    // Key/value tables bold the first column; comparison tables keep both
+    // columns equal weight.
+    const boldFirst = !isComparisonTable(node);
+    const wrap = "my-6 overflow-hidden rounded-xl border border-[#2d3a54] shadow-md shadow-black/20" +
+      (boldFirst ? " [&_tbody_td:first-child]:font-semibold [&_tbody_td:first-child]:text-gray-100" : "");
+    return (
+      <div className={wrap}>
+        <table className="w-full text-left border-collapse font-sans text-xs" {...props}>
+          {children}
+        </table>
+      </div>
+    );
+  },
   thead: ({node, children, ...props}) => (
     <thead className="bg-[#9fef00]/10 border-b border-[#9fef00]/20 text-[#9fef00]" {...props}>
       {children}
@@ -921,11 +979,16 @@ const markdownComponents: import('react-markdown').Components = {
       {children}
     </th>
   ),
-  td: ({node, children, ...props}) => (
-    <td className="px-4 py-3 text-gray-300 leading-relaxed" {...props}>
-      {children}
-    </td>
-  ),
+  td: ({node, children, ...props}) => {
+    // Empty cells (e.g. shorter column in an uneven comparison table) render an
+    // em-dash placeholder instead of a blank gap.
+    const isEmpty = extractText(children).trim() === '';
+    return (
+      <td className="px-4 py-3 text-gray-300 leading-relaxed" {...props}>
+        {isEmpty ? <span className="text-gray-600">—</span> : children}
+      </td>
+    );
+  },
   hr: () => (
     <hr className="border-[#2d3a54] my-8 border-t-[1.5px] opacity-50" />
   ),
