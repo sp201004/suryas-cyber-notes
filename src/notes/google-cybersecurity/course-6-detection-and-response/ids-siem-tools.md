@@ -79,27 +79,36 @@
 ### XML — Windows Event Logs
 
 > **XML LOG FORMAT — Windows Events**
-> **WHEN SEEN: Windows Event Viewer (.evtx files), Active Directory, IIS, Exchange.**
-> **STRUCTURE: Strict paired tags <tag>value</tag>. Human-readable but verbose.**
-> **<Event>**
-> **<System>**
-> **<EventID>4625</EventID>        <!-- 4625 = Failed Logon attempt -->**
-> **<TimeCreated>2026-05-21T17:45:00Z</TimeCreated>**
-> **<Computer>DC-01.CORP.INTERNAL</Computer>**
-> **<Channel>Security</Channel>**
-> **</System>**
-> **<EventData>**
-> **<Data Name='TargetUserName'>jsmith</Data>**
-> **<Data Name='IpAddress'>192.168.10.45</Data>**
-> **</EventData>**
-> **</Event>**
-> **READING: Windows Security Event 4625 = FAILED LOGIN for user 'jsmith'**
-> **from IP 192.168.10.45 on Domain Controller DC-01.**
-> **CRITICAL WINDOWS EVENT IDs TO MEMORIZE:**
-> **4624 = Successful Logon    4625 = Failed Logon**
-> **4648 = Explicit Credential Logon (Pass-the-Hash indicator)**
-> **4688 = Process Created     4720 = User Account Created**
-> **4732 = Member Added to Security Group**
+> **WHEN SEEN:** Windows Event Viewer (.evtx files), Active Directory, IIS, Exchange.
+> **STRUCTURE:** Strict paired tags <tag>value</tag>. Human-readable but verbose.
+
+```xml
+<Event>
+  <System>
+    <EventID>4625</EventID>        <!-- 4625 = Failed Logon attempt -->
+    <TimeCreated>2026-05-21T17:45:00Z</TimeCreated>
+    <Computer>DC-01.CORP.INTERNAL</Computer>
+    <Channel>Security</Channel>
+  </System>
+  <EventData>
+    <Data Name='TargetUserName'>jsmith</Data>
+    <Data Name='IpAddress'>192.168.10.45</Data>
+  </EventData>
+</Event>
+```
+
+> **READING:** Windows Security Event 4625 = FAILED LOGIN for user 'jsmith' from IP 192.168.10.45 on Domain Controller DC-01.
+
+**CRITICAL WINDOWS EVENT IDs TO MEMORIZE:**
+
+| **Event ID** | **Meaning** |
+| --- | --- |
+| 4624 | Successful Logon |
+| 4625 | Failed Logon |
+| 4648 | Explicit Credential Logon (Pass-the-Hash indicator) |
+| 4688 | Process Created |
+| 4720 | User Account Created |
+| 4732 | Member Added to Security Group |
 
 ### CEF — Common Event Format (Security Appliances)
 

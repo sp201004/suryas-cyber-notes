@@ -310,6 +310,73 @@ const renderSqlLines = (code: string) => {
   });
 };
 
+// Render XML with per-line highlighting: comments grey, tag names pink,
+// attribute names cyan, quoted values amber, brackets/`=` sky, text grey-200.
+const renderXmlLines = (code: string) => {
+  const re = /(<!--[\s\S]*?-->|<\/?|\/?>|[A-Za-z_][\w:.\-]*|"[^"]*"|'[^']*'|=|[^<>="']+)/g;
+  return code.split('\n').map((line, idx) => {
+    const nodes: React.ReactNode[] = [];
+    let m: RegExpExecArray | null; let k = 0; let inTag = false; let expectName = false;
+    while ((m = re.exec(line)) !== null) {
+      const t = m[0]; const key = `${idx}-${k++}`;
+      if (t.startsWith('<!--')) { nodes.push(<span key={key} className="text-gray-500 italic">{t}</span>); continue; }
+      if (t === '<' || t === '</') { inTag = true; expectName = true; nodes.push(<span key={key} className="text-sky-300/80">{t}</span>); continue; }
+      if (t === '>' || t === '/>' ) { inTag = false; nodes.push(<span key={key} className="text-sky-300/80">{t}</span>); continue; }
+      if (t === '=') { nodes.push(<span key={key} className="text-sky-300/80">{t}</span>); continue; }
+      if (t[0] === '"' || t[0] === "'") { nodes.push(<span key={key} className="text-amber-300">{t}</span>); continue; }
+      if (inTag && /^[A-Za-z_]/.test(t)) {
+        if (expectName) { expectName = false; nodes.push(<span key={key} className="text-pink-400 font-semibold">{t}</span>); }
+        else nodes.push(<span key={key} className="text-cyan-300">{t}</span>);
+        continue;
+      }
+      nodes.push(<span key={key} className="text-gray-200">{t}</span>);
+    }
+    return <div key={idx}>{nodes.length ? nodes : '\u00a0'}</div>;
+  });
+};
+
+// Render JSON with per-line highlighting: keys cyan, string values amber,
+// numbers orange, literals pink, punctuation sky.
+const renderJsonLines = (code: string) => {
+  const re = /("(?:[^"\\]|\\.)*"|\btrue\b|\bfalse\b|\bnull\b|-?\d+\.?\d*|[{}[\],:]|\s+|[^\s{}[\],:"]+)/g;
+  return code.split('\n').map((line, idx) => {
+    const toks: string[] = [];
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(line)) !== null) toks.push(m[0]);
+    const nodes = toks.map((t, ti) => {
+      const key = `${idx}-${ti}`;
+      if (t[0] === '"') {
+        let n = ti + 1;
+        while (n < toks.length && toks[n].trim() === '') n++;
+        const isKey = toks[n] === ':';
+        return <span key={key} className={isKey ? 'text-cyan-300' : 'text-amber-300'}>{t}</span>;
+      }
+      if (/^(true|false|null)$/.test(t)) return <span key={key} className="text-pink-400">{t}</span>;
+      if (/^-?\d/.test(t)) return <span key={key} className="text-orange-400">{t}</span>;
+      if (/^[{}[\],:]$/.test(t)) return <span key={key} className="text-sky-300/80">{t}</span>;
+      return <span key={key} className="text-gray-200">{t}</span>;
+    });
+    return <div key={idx}>{nodes.length ? nodes : '\u00a0'}</div>;
+  });
+};
+
+// Languages that render inside the terminal-style code component (never as a
+// bare monospace card or callout). Maps each to a highlighter + display label.
+const CODE_LANG_LABEL: Record<string, string> = {
+  bash: 'Bash Terminal', sh: 'Bash Terminal', shell: 'Bash Terminal',
+  spl: 'Splunk SPL', python: 'Python', sql: 'SQL', xml: 'XML', json: 'JSON',
+  yaml: 'YAML', yml: 'YAML', http: 'HTTP',
+};
+const renderCodeLines = (lang: string, content: string): React.ReactNode => {
+  switch (lang) {
+    case 'python': return renderPythonLines(content);
+    case 'sql': return renderSqlLines(content);
+    case 'xml': return renderXmlLines(content);
+    case 'json': return renderJsonLines(content);
+    default: return renderBashLines(content); // bash/sh/shell/spl → prompt styling, # comments
+  }
+};
+
 // Does a fenced block contain GENUINE diagram structure (boxes, flows, trees,
 // aligned columns)? If so it must stay an atomic monospace card. This is the
 // guardrail for the "fake diagram" rule below — when in doubt this returns
@@ -1034,23 +1101,22 @@ const markdownComponents: import('react-markdown').Components = {
     );
   },
     pre: ({node, children, ...props}: any) => {
-    let isBash = false;
-    let isPython = false;
-    let isSql = false;
+    let lang = '';
     let className = '';
-    
+
     // Check if the child is a code element and extract language
     if (children && typeof children === 'object' && 'props' in children && children.props.className) {
       className = children.props.className;
       const match = /language-(\w+)/.exec(className);
-      isBash = match && match[1] === 'bash';
-      isPython = match && match[1] === 'python';
-      isSql = match && match[1] === 'sql';
+      if (match) lang = match[1].toLowerCase();
     }
 
     const content = extractText(children).replace(/\n$/, '');
 
-    if (isPython) {
+    // CODE / QUERIES / LOG SAMPLES / CONFIG (bash, spl, python, sql, xml, json)
+    // render inside the terminal-style component with the right language —
+    // never as a bare monospace card or callout.
+    if (lang in CODE_LANG_LABEL) {
       return (
         <div className="bg-[#0b0f19] rounded-xl border border-[#2d3a54] my-6 overflow-hidden shadow-xl font-mono text-xs leading-relaxed select-all">
           <div className="bg-[#111827] px-4 py-2 flex items-center justify-between border-b border-[#2d3a54]/80">
@@ -1059,54 +1125,16 @@ const markdownComponents: import('react-markdown').Components = {
               <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/75" />
               <div className="w-2.5 h-2.5 rounded-full bg-green-500/75" />
             </div>
-            <span className="text-[10px] text-gray-400 font-bold select-none tracking-wider uppercase">Python</span>
+            <span className="text-[10px] text-gray-400 font-bold select-none tracking-wider uppercase">{CODE_LANG_LABEL[lang]}</span>
             <span className="w-12" />
           </div>
           <pre className="p-4 overflow-x-auto whitespace-pre leading-relaxed bg-[#0b0f19] font-mono select-all">
-            {renderPythonLines(content)}
+            {renderCodeLines(lang, content)}
           </pre>
         </div>
       );
     }
 
-    if (isBash) {
-      return (
-        <div className="bg-[#0b0f19] rounded-xl border border-[#2d3a54] my-6 overflow-hidden shadow-xl font-mono text-xs leading-relaxed select-all">
-          <div className="bg-[#111827] px-4 py-2 flex items-center justify-between border-b border-[#2d3a54]/80">
-            <div className="flex space-x-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-500/75" />
-              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/75" />
-              <div className="w-2.5 h-2.5 rounded-full bg-green-500/75" />
-            </div>
-            <span className="text-[10px] text-gray-400 font-bold select-none tracking-wider uppercase">Bash Terminal</span>
-            <span className="w-12" />
-          </div>
-          <pre className="p-4 overflow-x-auto whitespace-pre leading-relaxed bg-[#0b0f19] font-mono select-all">
-            {renderBashLines(content)}
-          </pre>
-        </div>
-      );
-    }
-
-    if (isSql) {
-      return (
-        <div className="bg-[#0b0f19] rounded-xl border border-[#2d3a54] my-6 overflow-hidden shadow-xl font-mono text-xs leading-relaxed select-all">
-          <div className="bg-[#111827] px-4 py-2 flex items-center justify-between border-b border-[#2d3a54]/80">
-            <div className="flex space-x-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-red-500/75" />
-              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/75" />
-              <div className="w-2.5 h-2.5 rounded-full bg-green-500/75" />
-            </div>
-            <span className="text-[10px] text-gray-400 font-bold select-none tracking-wider uppercase">SQL</span>
-            <span className="w-12" />
-          </div>
-          <pre className="p-4 overflow-x-auto whitespace-pre leading-relaxed bg-[#0b0f19] font-mono select-all">
-            {renderSqlLines(content)}
-          </pre>
-        </div>
-      );
-    }
-    
     // Check if this is an ASCII table (tabular data with borders)
     if (isAsciiTable(content)) {
       const tableData = parseAsciiTable(content);
@@ -1457,6 +1485,46 @@ const detachNestedTables = (md: string): string => {
   return out.join('\n');
 };
 
+// Unlabeled ``` fences that clearly hold shell / query / log content are tagged
+// so they render in the terminal component instead of a bare monospace card.
+// Conservative: requires a strong code signal (a `#` comment PLUS a query, or a
+// shell prompt / known command) AND no ASCII-diagram lines — so genuine
+// diagrams and label/display cards (e.g. "DNS: Name → IP") are never touched.
+const CODE_DIAGRAM_RE = /\+[-]{2,}|[┌┐└┘├┤┬┴┼─│╔╗╚╝║═╠╣╦╩╬►◄▶◀▲▼⟶⟵→←↑↓]|--+>|<--+/;
+const tagCodeFences = (md: string): string => {
+  const lines = md.split('\n');
+  const out: string[] = [];
+  const isFence = (l: string) => l.trim().startsWith('```');
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (isFence(line)) {
+      // Consume this fence as one opener→closer unit (labeled or not) so a
+      // labeled fence's closing ``` is never mistaken for a new opener.
+      const openerLang = line.trim().slice(3).trim();
+      const body: string[] = [];
+      let j = i + 1;
+      while (j < lines.length && !isFence(lines[j])) { body.push(lines[j]); j++; }
+      const closing = j < lines.length ? lines[j] : '```';
+      const nonEmpty = body.filter(b => b.trim() !== '');
+      const hasDiagram = body.some(b => CODE_DIAGRAM_RE.test(b) || /^\s*[|+][|+\-vV^<>\s]*[|+]\s*$/.test(b));
+      const hasComment = nonEmpty.some(b => b.trim().startsWith('#'));
+      const hasQuery = nonEmpty.some(b => /\b\w+=\w|index=|sourcetype=|EventCode=|\|\s*(stats|table|chart|search|head|sort|dedup|eval|where|rex)\b/.test(b));
+      const hasPrompt = nonEmpty.some(b => /^\s*\$\s/.test(b) || /^\s*(sudo|jq|nmap|curl|grep|awk|sed|tcpdump|cat)\s/.test(b.trim()));
+      const qualifies = openerLang === '' && !hasDiagram && nonEmpty.length >= 2
+        && ((hasComment && hasQuery) || hasPrompt);
+      out.push(qualifies ? '```spl' : line);
+      for (const b of body) out.push(b);
+      out.push(closing);
+      i = j + 1;
+      continue;
+    }
+    out.push(line);
+    i++;
+  }
+  return out.join('\n');
+};
+
 const parseIntoSections = (rawContent: string): ParsedSection[] => {
   const lines = rawContent.split('\n');
   const sections: ParsedSection[] = [];
@@ -1523,7 +1591,7 @@ export default function NotesView({
   const rawContent = boldLabelsGlobally(
     fixConversionTitleCallouts(
       fixRawBullets(
-        fixStepCards(detachNestedTables(foldedContent))
+        fixStepCards(detachNestedTables(tagCodeFences(foldedContent)))
       )
     )
   );

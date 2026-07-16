@@ -186,7 +186,7 @@ This information is called a **banner**. A banner tells us:
 
 ### Example Banner
 
-```
+```http
 HTTP/1.1 200 OK
 Server: Apache/2.4.1
 Content-Type: text/html
