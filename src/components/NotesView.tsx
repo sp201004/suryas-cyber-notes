@@ -1032,6 +1032,28 @@ const panelColumns = (node: any): number => {
 //  - column 1 is a short label and column 2 is a long description
 //    (e.g. numbered/step tables: "1" → paragraph).
 // >2 columns is always key/value (bold first column).
+// A narrow leading INDEX/NUMBER column — header like "#" / "No." / "Rank", or
+// every first-column cell numeric. The real label lives in column 2, so bold
+// must target column 2 (not the index column).
+const INDEX_HEADERS = new Set([
+  '#', '#.', 'no', 'no.', 'num', 'num.', 'sno', 's.no', 's.no.', 'sr', 'sr.',
+  'sl', 'sl.', 'rank',
+]);
+const isIndexFirstColumn = (node: any): boolean => {
+  const h = getTableHeaders(node);
+  if (h.length < 2) return false;
+  const first = h[0].replace(/\*/g, '').trim().toLowerCase();
+  const { cols } = getComparisonModel(node);
+  const c0 = cols[0] || [];
+  const allNum = c0.length >= 2 && c0.every(x => /^\d+[.)]?$/.test(x.trim()));
+  if (!allNum) return false;   // numeric cells required for an index column
+  // A consecutive integer run starting at 1/0 is a true row counter (# / Step),
+  // NOT a meaningful numeric KEY like Port 22/80, Code 200/404, EventID 4624.
+  const nums = c0.map(x => parseInt(x, 10));
+  const sequential = nums.every((v, k) => v === nums[0] + k) && (nums[0] === 0 || nums[0] === 1);
+  return sequential || INDEX_HEADERS.has(first);
+};
+
 const isComparisonTable = (node: any): boolean => {
   const h = getTableHeaders(node);
   const first = h.length ? h[0].replace(/\*/g, '').trim() : '';
@@ -1253,11 +1275,22 @@ const markdownComponents: import('react-markdown').Components = {
       );
     }
 
-    // Key/value tables bold the first column; comparison tables keep both
-    // columns equal weight.
-    const boldFirst = !isComparisonTable(node);
+    // Key/value tables bold the label column; comparison tables keep both
+    // columns equal weight. When the first column is a narrow index/number
+    // column ("#", "No.", numeric), the label lives in column 2 — bold that,
+    // but only when column 2 is a SHORT label (not a label+description cell,
+    // e.g. numbered workflow tables whose col 2 is a whole paragraph).
+    const indexFirst = isIndexFirstColumn(node);
+    let boldSecond = false;
+    if (indexFirst) {
+      const c1 = (getComparisonModel(node).cols[1]) || [];
+      const avg1 = c1.length ? c1.reduce((s, x) => s + x.trim().split(/\s+/).length, 0) / c1.length : 0;
+      boldSecond = avg1 > 0 && avg1 <= 6;
+    }
+    const boldFirst = !indexFirst && !isComparisonTable(node);
     const wrap = "my-6 overflow-hidden rounded-xl border border-[#2d3a54] shadow-md shadow-black/20" +
-      (boldFirst ? " [&_tbody_td:first-child]:font-semibold [&_tbody_td:first-child]:text-gray-100" : "");
+      (boldFirst ? " [&_tbody_td:first-child]:font-semibold [&_tbody_td:first-child]:text-gray-100" : "") +
+      (boldSecond ? " [&_tbody_td:nth-child(2)]:font-semibold [&_tbody_td:nth-child(2)]:text-gray-100" : "");
     return (
       <div className={wrap}>
         <table className="w-full text-left border-collapse font-sans text-xs" {...props}>
