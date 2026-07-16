@@ -111,10 +111,11 @@
 > Purpose: If an attacker compromises ONE segment (e.g., a guest Wi-Fi laptop), they CANNOT freely move to other segments (e.g., the finance database).
 > This is the network-level implementation of Defense in Depth.
 
-> **SUBNETTING & SECURITY ZONES — Network Architecture**
-> **SUBNETTING: Dividing a large IP range into smaller sub-networks**
-> **Full network: 192.168.0.0/16  (65,534 hosts -- too large to manage)**
-> **After subnetting:**
+**SUBNETTING:** Dividing a large IP range into smaller sub-networks.
+
+**Full network:** 192.168.0.0/16  (65,534 hosts -- too large to manage).
+
+**After subnetting:**
 
 ```
   +----------------------+  +----------------------+  +----------------------+
@@ -122,9 +123,11 @@
   | Engineering subnet   |  | HR subnet            |  | Finance subnet       |
   | 254 host addresses   |  | 254 host addresses   |  | 254 host addresses   |
   +----------------------+  +----------------------+  +----------------------+
-  CIDR notation: /24 means 24 bits are the network portion, 8 bits for hosts.
-  /24 = 256 addresses (254 usable), /16 = 65536 addresses, /32 = single host.
+```
 
+**CIDR notation:** /24 means 24 bits are the network portion, 8 bits for hosts. /24 = 256 addresses (254 usable), /16 = 65536 addresses, /32 = single host.
+
+```
   SECURITY ZONES (from outermost to innermost, most to least trusted):
 
   INTERNET (Uncontrolled Zone)
@@ -156,26 +159,20 @@
 
 ## Proxy Servers — The Middleman
 
-> **FORWARD PROXY vs. REVERSE PROXY with NAT**
-> **FORWARD PROXY                         REVERSE PROXY**
-> **(Controls outbound / internal users) (Controls inbound / protects servers)**
-> **Internal -> Forward -> Internet       Internet -> Reverse -> Internal**
-> **User          Proxy                              Proxy        App Server**
-> **(NGINX)**
-> **Use case: Block employees from       Use case: Hides real server IPs.**
-> **visiting malware sites. Filter        Terminates TLS. Load balances.**
-> **content. Log all web requests.        Prevents direct attacks on backend.**
-> **NAT (Network Address Translation) -- used by ALL proxy types:**
+| **Attribute** | **Forward Proxy** | **Reverse Proxy** |
+| --- | --- | --- |
+| **Controls** | Outbound / internal users | Inbound / protects servers |
+| **Flow** | Internal User → Forward Proxy → Internet | Internet → Reverse Proxy → Internal App Server (NGINX) |
+| **Use case** | Block employees from visiting malware sites. Filter content. Log all web requests. | Hides real server IPs. Terminates TLS. Load balances. Prevents direct attacks on backend. |
 
-```
-  +----------------------------------------------------------+
-  | Private IP (10.0.0.5) sends request                      |
-  | NAT replaces source IP with public IP (203.0.113.1)      |
-  | Internet sees only the public IP -- private IP is hidden |
-  | Reply comes back to public IP, NAT routes to 10.0.0.5    |
-  +----------------------------------------------------------+
-  Result: Internal IP addresses are NEVER visible to the internet.
-```
+**NAT (Network Address Translation)** — used by ALL proxy types:
+
+1. Private IP (10.0.0.5) sends request
+2. NAT replaces source IP with public IP (203.0.113.1)
+3. Internet sees only the public IP — private IP is hidden
+4. Reply comes back to public IP, NAT routes to 10.0.0.5
+
+> **Result:** Internal IP addresses are NEVER visible to the internet.
 
 | **Proxy Type** | **Direction** | **What It Protects** | **Real Example** |
 | --- | --- | --- | --- |
