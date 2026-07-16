@@ -468,6 +468,60 @@ const boldInlineLabel = (line: string): string => {
   return line;
 };
 
+// Stopwords for fuzzy heading/title matching.
+const TITLE_STOP = new Set(['the','and','a','an','of','to','in','for','vs','comparison','key','differences','difference','feature','reference','at','glance','detailed','with','examples','example','core','side','by','how','it','works','model','full','structure','its','on','their','into']);
+const titleTokens = (t: string): Set<string> =>
+  new Set(t.replace(/[*>#`]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(w => w && !TITLE_STOP.has(w)));
+
+// Conversion cleanup: an all-bold, body-less title blockquote sitting directly
+// ABOVE a markdown table is a leftover from a comparison-box→table conversion.
+// If it just restates the section heading → drop it; otherwise → unwrap it into
+// a bold caption paragraph (never leave a lone title-only callout).
+const fixConversionTitleCallouts = (md: string): string => {
+  const lines = md.split('\n');
+  const out: string[] = [];
+  let inFence = false;
+  const precedingHeading = (): string | null => {
+    for (let k = out.length - 1; k >= 0; k--) {
+      const s = out[k].trim();
+      if (s === '') continue;
+      if (/^#{1,6}\s/.test(s)) return s.replace(/^#+\s*/, '');
+      return null;
+    }
+    return null;
+  };
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    if (line.trim().startsWith('```')) { inFence = !inFence; out.push(line); i++; continue; }
+    if (!inFence && line.trim().startsWith('>')) {
+      let j = i;
+      const grp: string[] = [];
+      while (j < lines.length && lines[j].trim().startsWith('>')) { grp.push(lines[j]); j++; }
+      const nonEmpty = grp.filter(g => g.replace(/^\s*>\s?/, '').trim() !== '');
+      const allBold = nonEmpty.length > 0 && nonEmpty.every(g => /^\s*>\s*\*\*.+\*\*\s*$/.test(g));
+      let k = j;
+      while (k < lines.length && lines[k].trim() === '') k++;
+      const nextIsTable = k < lines.length && lines[k].trim().startsWith('|');
+      if (allBold && nextIsTable) {
+        const hd = precedingHeading();
+        const g = titleTokens(nonEmpty.join(' '));
+        const h = hd ? titleTokens(hd) : new Set<string>();
+        const shared = [...g].filter(t => h.has(t)).length;
+        const dup = g.size > 0 && shared >= Math.ceil(0.6 * g.size);
+        if (dup) { i = k; continue; }                 // drop — heading already says it
+        for (const gl of nonEmpty) out.push(gl.replace(/^\s*>\s?/, ''));  // unwrap to bold caption
+        out.push('');
+        i = k; continue;
+      }
+      for (let x = i; x < j; x++) out.push(lines[x]);
+      i = j; continue;
+    }
+    out.push(line); i++;
+  }
+  return out.join('\n');
+};
+
 // Site-wide pass: bold label lines everywhere (paragraphs, blockquotes, list
 // items) EXCEPT inside fenced code blocks and table rows. One place, applies to
 // all rooms.
@@ -1340,7 +1394,7 @@ export default function NotesView({
   // Detach any markdown tables nested inside list items so they render as
   // styled tables instead of leaking raw pipes (applies site-wide). Then bold
   // label lines everywhere (outside fenced code / tables).
-  const rawContent = boldLabelsGlobally(detachNestedTables(foldedContent));
+  const rawContent = boldLabelsGlobally(fixConversionTitleCallouts(detachNestedTables(foldedContent)));
   const sections = parseIntoSections(rawContent);
   const [isTocExpanded, setIsTocExpanded] = useState(false);
 
