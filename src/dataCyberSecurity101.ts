@@ -296,6 +296,203 @@ const linuxChestRoom: Topic = {
   ]
 };
 
+const WINDOWS_AD_MODULE_ID = 'windows-and-ad-fundamentals';
+
+// Module 3 · Room 1 — Windows Fundamentals 1 (editions, GUI, NTFS, accounts, UAC, Task Manager).
+const winFund1Room: Topic = {
+  id: 'windows-fundamentals-1',
+  moduleId: WINDOWS_AD_MODULE_ID,
+  title: 'Windows Fundamentals 1',
+  description: 'Get oriented in Windows: editions, the desktop GUI, the NTFS file system and permissions, the System32 directory, user accounts and profiles, UAC, and Task Manager.',
+  status: 'unlocked',
+  iconType: 'windows',
+  content: '',
+  realWorldCallout: {
+    title: 'Judging a Suspicious Process',
+    concept: 'Context Over Filename',
+    scenario: 'An analyst spots a process called svchost.exe using unusual network connections. Instead of trusting the name, they check its path, parent process, user account, digital signature, and command-line arguments to decide whether it is the real Windows binary or malware masquerading as it.',
+    relevance: 'Windows Fundamentals 1 teaches the exact structures — System32 paths, accounts, Task Manager details — an investigator uses to tell a legitimate process from an impostor.'
+  },
+  mindmap: [
+    { id: 'win1', label: 'Windows Basics', description: 'How Windows is organised for users and security', x: 50, y: 12, connections: ['gui', 'ntfs', 'accounts', 'uac'] },
+    { id: 'gui', label: 'Desktop & GUI', description: 'Start Menu, Taskbar, Search, Task View, System Tray', x: 16, y: 50 },
+    { id: 'ntfs', label: 'NTFS', description: 'Journaling file system with permissions, EFS, and Alternate Data Streams', x: 39, y: 58 },
+    { id: 'accounts', label: 'Accounts', description: 'Administrator vs Standard User; least privilege; profiles under C:\\Users', x: 62, y: 58 },
+    { id: 'uac', label: 'UAC & Tools', description: 'User Account Control, Settings, Control Panel, Task Manager', x: 85, y: 50 }
+  ],
+  keyTakeaways: [
+    'Windows ships in editions (Home, Pro, Enterprise, Education, Server), each exposing different features.',
+    'GUI = Graphical User Interface; the Taskbar Notification Area is also called the System Tray.',
+    'NTFS is the modern Windows file system: journaling, permissions, compression, and EFS encryption.',
+    'Alternate Data Streams (ADS) hide extra data inside NTFS files and store Mark of the Web metadata.',
+    'C:\\Windows (referenced by %windir%) holds System32; accounts are Administrator or Standard User.',
+    'Follow the Principle of Least Privilege; UAC prompts before privileged actions; Task Manager opens with Ctrl+Shift+Esc.'
+  ],
+  quiz: [
+    { id: 'q-wf1-1', question: 'What does GUI stand for?', type: 'text', correctAnswer: 'Graphical User Interface', hint: 'The visual way to interact with Windows.' },
+    { id: 'q-wf1-2', question: 'What is the modern Windows file system called?', type: 'text', correctAnswer: 'NTFS', hint: 'New Technology File System.' },
+    { id: 'q-wf1-3', question: 'Which NTFS feature can hide extra data streams inside a file?', type: 'text', correctAnswer: 'ADS', hint: 'Alternate Data Streams.' },
+    { id: 'q-wf1-4', question: 'Which environment variable points to the Windows installation directory?', type: 'text', correctAnswer: '%windir%', hint: 'Wrapped in percent signs.' },
+    { id: 'q-wf1-5', question: 'Which keyboard shortcut opens Task Manager directly?', type: 'text', correctAnswer: 'Ctrl + Shift + Esc', hint: 'Three keys, bottom-left plus Esc.' },
+    { id: 'q-wf1-6', question: 'What does UAC stand for?', type: 'text', correctAnswer: 'User Account Control', hint: 'It prompts before privileged actions.' }
+  ]
+};
+
+// Module 3 · Room 2 — Windows Fundamentals 2 (msconfig, Computer Management, CMD, Registry).
+const winFund2Room: Topic = {
+  id: 'windows-fundamentals-2',
+  moduleId: WINDOWS_AD_MODULE_ID,
+  title: 'Windows Fundamentals 2',
+  description: 'Master the built-in Windows tools: System Configuration (msconfig), UAC levels, Computer Management, System Information, Resource Monitor, core CMD commands, and the Registry.',
+  status: 'unlocked',
+  iconType: 'windows',
+  content: '',
+  realWorldCallout: {
+    title: 'Enumerating a Freshly Accessed Host',
+    concept: 'Native Tooling Recon',
+    scenario: 'After gaining a shell, a responder runs whoami, hostname, ipconfig /all, and netstat -ano to map the identity, network, and active connections of the machine before deciding the next move.',
+    relevance: 'The Command Prompt and management consoles in this room are the same native tools defenders use to investigate and attackers abuse to Live Off The Land.'
+  },
+  mindmap: [
+    { id: 'win2', label: 'Built-in Tools', description: 'Configuring, monitoring, and investigating Windows', x: 50, y: 12, connections: ['msconfig', 'compmgmt', 'cmd', 'registry'] },
+    { id: 'msconfig', label: 'msconfig', description: 'System Configuration: General, Boot, Services, Startup, Tools', x: 16, y: 50 },
+    { id: 'compmgmt', label: 'Computer Mgmt', description: 'Task Scheduler, Event Viewer, Shared Folders, Services', x: 39, y: 58 },
+    { id: 'cmd', label: 'Command Prompt', description: 'hostname, whoami, ipconfig, netstat, net', x: 62, y: 58 },
+    { id: 'registry', label: 'Registry', description: 'Five root keys; a common persistence target', x: 85, y: 50 }
+  ],
+  keyTakeaways: [
+    'System Configuration (msconfig) troubleshoots startup and boot through General, Boot, Services, Startup, and Tools tabs.',
+    'UAC has four levels: Always Notify, Notify for Apps (default), Notify Without Dimming, and Never Notify.',
+    'Computer Management (compmgmt.msc) groups System Tools, Storage, and Services and Applications.',
+    'Event Viewer, Task Scheduler, and Services are key persistence and investigation points.',
+    'Core CMD commands: hostname, whoami, ipconfig /all, netstat -ano, net user.',
+    'The Registry has five root keys (HKCR, HKCU, HKLM, HKU, HKCC) and is a frequent persistence target.'
+  ],
+  quiz: [
+    { id: 'q-wf2-1', question: 'Which command opens the System Configuration utility?', type: 'text', correctAnswer: 'msconfig', hint: 'Short for Microsoft System Configuration.' },
+    { id: 'q-wf2-2', question: 'Which command opens Computer Management?', type: 'text', correctAnswer: 'compmgmt.msc', hint: 'An .msc management console.' },
+    { id: 'q-wf2-3', question: 'Which CMD command shows the current logged-in user?', type: 'text', correctAnswer: 'whoami', hint: 'Same idea as on Linux.' },
+    { id: 'q-wf2-4', question: 'Which netstat option set shows all connections with the owning PID?', type: 'text', correctAnswer: 'netstat -ano', hint: 'All, numeric, owner PID.' },
+    { id: 'q-wf2-5', question: 'How many root keys does the Windows Registry have?', type: 'text', correctAnswer: '5', hint: 'HKCR, HKCU, HKLM, HKU, HKCC.' }
+  ]
+};
+
+// Module 3 · Room 3 — Windows Fundamentals 3 (Windows security features).
+const winFund3Room: Topic = {
+  id: 'windows-fundamentals-3',
+  moduleId: WINDOWS_AD_MODULE_ID,
+  title: 'Windows Fundamentals 3',
+  description: 'Tour the built-in Windows defences: Windows Update, Windows Security, Microsoft Defender, the firewall, SmartScreen, exploit mitigations, TPM, BitLocker, and Volume Shadow Copy.',
+  status: 'unlocked',
+  iconType: 'windows',
+  content: '',
+  realWorldCallout: {
+    title: 'Breaking the Ransomware Chain',
+    concept: 'Defense in Depth',
+    scenario: 'A ransomware operator exploits a missing patch, uses built-in tools to stay hidden, deletes Volume Shadow Copies, then encrypts files. Each Windows security layer — patching, Defender, behaviour monitoring, and off-site backups — breaks a different link in that chain.',
+    relevance: 'Windows Fundamentals 3 shows how overlapping defences combine so that no single failure exposes the whole system.'
+  },
+  mindmap: [
+    { id: 'win3', label: 'Windows Security', description: 'Layered built-in defences (Defense in Depth)', x: 50, y: 12, connections: ['update', 'defender', 'firewall', 'crypto'] },
+    { id: 'update', label: 'Updates', description: 'Windows Update and Patch Tuesday close known vulnerabilities', x: 16, y: 50 },
+    { id: 'defender', label: 'Defender', description: 'Antivirus scans, real-time and ransomware protection', x: 39, y: 58 },
+    { id: 'firewall', label: 'Firewall & SmartScreen', description: 'Domain/Private/Public profiles; DEP, CFG, ASLR mitigations', x: 62, y: 58 },
+    { id: 'crypto', label: 'TPM & BitLocker', description: 'Hardware keys, drive encryption, VSS restore points', x: 85, y: 50 }
+  ],
+  keyTakeaways: [
+    'Windows Update patches vulnerabilities; Patch Tuesday is the second Tuesday of each month.',
+    'Windows Security is the central dashboard; red status means immediate action is required.',
+    'Microsoft Defender offers Quick, Full, and Custom scans and quarantines threats; keep Real-Time Protection on.',
+    'The firewall has Domain, Private, and Public profiles; untrusted Wi-Fi uses the Public profile.',
+    'SmartScreen blocks suspicious apps and downloads; DEP, CFG, and ASLR make exploitation harder.',
+    'TPM stores keys in hardware, BitLocker encrypts drives, and VSS enables restore points — ransomware deletes shadow copies, so keep off-site backups.'
+  ],
+  quiz: [
+    { id: 'q-wf3-1', question: 'On which day of the month does Microsoft traditionally release updates (Patch Tuesday)?', type: 'text', correctAnswer: 'Second Tuesday', hint: 'A specific Tuesday each month.' },
+    { id: 'q-wf3-2', question: 'Which Defender setting continuously monitors the system and should stay enabled?', type: 'text', correctAnswer: 'Real-time protection', hint: 'It acts as threats occur, not just on scans.' },
+    { id: 'q-wf3-3', question: 'Which firewall profile applies on untrusted airport or cafe Wi-Fi?', type: 'text', correctAnswer: 'Public', hint: 'The most restrictive of the three profiles.' },
+    { id: 'q-wf3-4', question: 'What does TPM stand for?', type: 'text', correctAnswer: 'Trusted Platform Module', hint: 'A hardware cryptographic processor.' },
+    { id: 'q-wf3-5', question: 'What does VSS stand for?', type: 'text', correctAnswer: 'Volume Shadow Copy Service', hint: 'It creates point-in-time snapshots.' }
+  ]
+};
+
+// Module 3 · Room 4 — Active Directory Basics (domains, OUs, GPOs, Kerberos/NetNTLM, trusts).
+const activeDirectoryRoom: Topic = {
+  id: 'active-directory-basics',
+  moduleId: WINDOWS_AD_MODULE_ID,
+  title: 'Active Directory Basics',
+  description: 'Understand the enterprise backbone: Windows domains, Domain Controllers, Organizational Units, delegation, Group Policy, Kerberos vs NetNTLM authentication, and trees, forests, and trusts.',
+  status: 'unlocked',
+  iconType: 'network',
+  content: '',
+  realWorldCallout: {
+    title: 'One Misconfiguration, Whole Domain',
+    concept: 'Centralised Control, Centralised Risk',
+    scenario: 'Because a Domain Controller holds authentication and policy for every machine, a single weak GPO, over-privileged delegation, or exposed admin account can hand an attacker control of the entire domain.',
+    relevance: 'Active Directory Basics explains the structures — DCs, OUs, GPOs, Kerberos — that defenders harden and attackers pivot through in enterprise networks.'
+  },
+  mindmap: [
+    { id: 'ad', label: 'Active Directory', description: 'Centralised identity and policy for a Windows domain', x: 50, y: 12, connections: ['dc', 'ou', 'gpo', 'auth', 'forest'] },
+    { id: 'dc', label: 'Domain Controller', description: 'Runs AD DS; authenticates users/computers and enforces policy', x: 12, y: 50 },
+    { id: 'ou', label: 'OUs & Delegation', description: 'Containers that organise objects, target GPOs, and delegate rights', x: 33, y: 58 },
+    { id: 'gpo', label: 'Group Policy', description: 'GPOs configure users and computers; distributed via SYSVOL', x: 55, y: 58 },
+    { id: 'auth', label: 'Authentication', description: 'Kerberos (ticket-based) and NetNTLM (challenge-response)', x: 76, y: 55 },
+    { id: 'forest', label: 'Trees & Forests', description: 'Namespaces, forests, and cross-domain trust relationships', x: 88, y: 48 }
+  ],
+  keyTakeaways: [
+    'Active Directory centrally manages users, computers, groups, and policies in a Windows domain.',
+    'Domain Controllers run AD DS and authenticate users and computers.',
+    'Organizational Units organise objects, allow GPO targeting, and support delegation (least privilege).',
+    'GPOs configure Computer and User settings, distribute through SYSVOL, and refresh with gpupdate /force.',
+    'Kerberos is modern and ticket-based (TGT then TGS); NetNTLM is legacy challenge-response; neither sends the password over the network.',
+    'A Tree shares one namespace, a Forest holds one or more trees, and Trusts enable cross-domain authentication but not automatic access.'
+  ],
+  quiz: [
+    { id: 'q-ad-1', question: 'What is the server that runs AD DS and authenticates the domain called?', type: 'text', correctAnswer: 'Domain Controller', hint: 'Abbreviated DC.' },
+    { id: 'q-ad-2', question: 'What does OU stand for in Active Directory?', type: 'text', correctAnswer: 'Organizational Unit', hint: 'A container for organising objects.' },
+    { id: 'q-ad-3', question: 'What is the default, modern, ticket-based Windows domain authentication protocol?', type: 'text', correctAnswer: 'Kerberos', hint: 'It uses TGTs and service tickets.' },
+    { id: 'q-ad-4', question: 'Which command forces an immediate Group Policy refresh?', type: 'text', correctAnswer: 'gpupdate /force', hint: 'Run it on the target machine.' },
+    { id: 'q-ad-5', question: 'What is a collection of one or more AD trees called?', type: 'text', correctAnswer: 'Forest', hint: 'Trees grow in one of these.' }
+  ]
+};
+
+// Module 3 · Room 5 — Mystery Chest (Bonus Revision) for Windows and AD Fundamentals.
+const winChestRoom: Topic = {
+  id: 'mystery-chest-windows',
+  moduleId: WINDOWS_AD_MODULE_ID,
+  title: 'Mystery Chest',
+  description: 'A bonus revision vault for the whole Windows and AD Fundamentals module: CMD/PowerShell references, key paths, NTFS permissions, security features, and Active Directory essentials.',
+  status: 'unlocked',
+  iconType: 'mystery-chest',
+  content: '',
+  realWorldCallout: {
+    title: 'The Windows Field Reference',
+    concept: 'Fast Recall Under Pressure',
+    scenario: 'Mid-investigation, an analyst needs the right console command or the meaning of a Kerberos ticket type. Instead of switching to a browser, they glance at a single consolidated sheet covering CMD, PowerShell, paths, and AD terms.',
+    relevance: 'Consolidating four dense rooms into one reference turns hesitation into muscle memory during labs, exams, and interviews.'
+  },
+  mindmap: [
+    { id: 'chest-win', label: 'Windows Cheat Sheet', description: 'The whole module at a glance', x: 50, y: 15, connections: ['cmds', 'sec', 'ad'] },
+    { id: 'cmds', label: 'Commands & Paths', description: 'CMD, PowerShell, .msc consoles, key directories', x: 20, y: 52 },
+    { id: 'sec', label: 'Security Features', description: 'Defender, firewall, SmartScreen, TPM, BitLocker, VSS', x: 50, y: 58 },
+    { id: 'ad', label: 'Active Directory', description: 'DC, OU, GPO, Kerberos vs NetNTLM, trees and forests', x: 80, y: 52 }
+  ],
+  keyTakeaways: [
+    'Key consoles: msconfig, compmgmt.msc, lusrmgr.msc, msinfo32, resmon, regedit.',
+    'Core CMD: hostname, whoami, ipconfig /all, netstat -ano, net user.',
+    'NTFS permissions run from Read up to Full Control; %windir% points to C:\\Windows.',
+    'Windows security layers: Update, Defender, Firewall, SmartScreen, TPM, BitLocker, VSS (Defense in Depth).',
+    'Active Directory essentials: Domain Controller, OU, GPO (SYSVOL, gpupdate /force).',
+    'Kerberos is ticket-based (TGT/TGS); NetNTLM is legacy challenge-response.'
+  ],
+  quiz: [
+    { id: 'q-mcw-1', question: 'Which command opens Local Users and Groups management?', type: 'text', correctAnswer: 'lusrmgr.msc', hint: 'An .msc console.' },
+    { id: 'q-mcw-2', question: 'Which hardware chip securely stores cryptographic keys for BitLocker?', type: 'text', correctAnswer: 'TPM', hint: 'Trusted Platform Module.' },
+    { id: 'q-mcw-3', question: 'Which Kerberos ticket is used to request further service tickets?', type: 'text', correctAnswer: 'TGT', hint: 'Ticket Granting Ticket.' },
+    { id: 'q-mcw-4', question: 'Through which network share are GPOs distributed to domain machines?', type: 'text', correctAnswer: 'SYSVOL', hint: 'A default domain share.' }
+  ]
+};
+
 export const CYBER_SECURITY_101_MODULES: Module[] = [
   {
     id: START_MODULE_ID,
@@ -319,6 +516,19 @@ export const CYBER_SECURITY_101_MODULES: Module[] = [
       linuxFund2Room,
       linuxFund3Room,
       linuxChestRoom,
+    ],
+  },
+  {
+    id: WINDOWS_AD_MODULE_ID,
+    title: 'Windows and AD Fundamentals',
+    description: 'Learn to navigate, administer, and secure Windows — the desktop and file system, built-in management tools, Windows security features, and Active Directory — across four rooms plus a bonus revision chest.',
+    isFuture: false,
+    topics: [
+      winFund1Room,
+      winFund2Room,
+      winFund3Room,
+      activeDirectoryRoom,
+      winChestRoom,
     ],
   },
   // Future modules are appended here, one object at a time.

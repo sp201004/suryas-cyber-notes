@@ -101,6 +101,12 @@ import cs101LinuxFund2 from './tryhackme/cyber-security-101/module2-linux-fundam
 import cs101LinuxFund3 from './tryhackme/cyber-security-101/module2-linux-fundamentals/linux-fundamentals-3.md?raw';
 import cs101LinuxChest from './tryhackme/cyber-security-101/module2-linux-fundamentals/mystery-chest.md?raw';
 
+import cs101WinFund1 from './tryhackme/cyber-security-101/module3-windows-and-ad-fundamentals/windows-fundamentals-1.md?raw';
+import cs101WinFund2 from './tryhackme/cyber-security-101/module3-windows-and-ad-fundamentals/windows-fundamentals-2.md?raw';
+import cs101WinFund3 from './tryhackme/cyber-security-101/module3-windows-and-ad-fundamentals/windows-fundamentals-3.md?raw';
+import cs101ActiveDirectory from './tryhackme/cyber-security-101/module3-windows-and-ad-fundamentals/active-directory-basics.md?raw';
+import cs101WinChest from './tryhackme/cyber-security-101/module3-windows-and-ad-fundamentals/mystery-chest.md?raw';
+
 export const notesByTopicId: Record<string, string> = {
   'offensive-security-intro': offSecIntro,
   'defensive-security-intro': defSecIntro,
@@ -202,4 +208,10 @@ export const notesByTopicId: Record<string, string> = {
   'linux-fundamentals-2': cs101LinuxFund2,
   'linux-fundamentals-3': cs101LinuxFund3,
   'mystery-chest-linux': cs101LinuxChest,
+
+  'windows-fundamentals-1': cs101WinFund1,
+  'windows-fundamentals-2': cs101WinFund2,
+  'windows-fundamentals-3': cs101WinFund3,
+  'active-directory-basics': cs101ActiveDirectory,
+  'mystery-chest-windows': cs101WinChest,
 };
