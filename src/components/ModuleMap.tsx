@@ -1534,6 +1534,49 @@ const renderUniqueIsometricObject = (
         </g>
       );
 
+    // CS101 M2 — Linux Fundamentals (Parts 1–3): terminal window with a Tux glyph
+    case 'linux-fundamentals-1':
+    case 'linux-fundamentals-2':
+    case 'linux-fundamentals-3':
+      return (
+        <g id="linux-terminal-scene">
+          <ellipse cx={x} cy={y + 17} rx={20} ry={7} fill="rgba(250, 204, 21, 0.2)" filter="blur(3px)" />
+          {/* Terminal window */}
+          <rect x={x - 16} y={y - 13} width={32} height={24} rx={2} fill="#0b1220" stroke="#eab308" strokeWidth="1.2" />
+          <rect x={x - 16} y={y - 13} width={32} height={5} rx={2} fill="#1e293b" />
+          <circle cx={x - 13} cy={y - 10.5} r={0.9} fill="#ef4444" />
+          <circle cx={x - 10} cy={y - 10.5} r={0.9} fill="#eab308" />
+          <circle cx={x - 7} cy={y - 10.5} r={0.9} fill="#22c55e" />
+          {/* Prompt lines */}
+          <path d={`M ${x - 13} ${y - 4} l 3 2 l -3 2`} fill="none" stroke="#9fef00" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+          <line x1={x - 8} y1={y} x2={x} y2={y} stroke="#9fef00" strokeWidth="1" strokeLinecap="round" />
+          <line x1={x - 13} y1={y + 5} x2={x + 6} y2={y + 5} stroke="#38bdf8" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+          {/* Mini Tux mascot */}
+          <ellipse cx={x + 9} cy={y + 4} rx={4.5} ry={5.5} fill="#0f172a" />
+          <ellipse cx={x + 9} cy={y + 5} rx={2.6} ry={3.4} fill="#f8fafc" />
+          <circle cx={x + 7.6} cy={y + 1} r={1} fill="#f8fafc" />
+          <circle cx={x + 10.4} cy={y + 1} r={1} fill="#f8fafc" />
+          <path d={`M ${x + 7.6} ${y + 3} L ${x + 10.4} ${y + 3} L ${x + 9} ${y + 4.6} Z`} fill="#eab308" />
+        </g>
+      );
+
+    // CS101 M2 — Linux Fundamentals Mystery Chest: treasure chest (bonus revision)
+    case 'mystery-chest-linux':
+      return (
+        <g id="mystery-chest-linux-scene">
+          <ellipse cx={x} cy={y + 18} rx={22} ry={8} fill="rgba(234, 179, 8, 0.18)" filter="blur(4px)" />
+          <path d={`M ${x - 15} ${y + 5} L ${x} ${y + 13} L ${x} ${y + 23} L ${x - 15} ${y + 15} Z`} fill="url(#chest-body-left)" stroke="#1e293b" strokeWidth="0.5" />
+          <path d={`M ${x} ${y + 13} L ${x + 15} ${y + 5} L ${x + 15} ${y + 15} L ${x} ${y + 23} Z`} fill="url(#chest-body-right)" stroke="#0f172a" strokeWidth="0.5" />
+          <path d={`M ${x - 15} ${y + 5} L ${x} ${y - 3} L ${x} ${y + 13} L ${x - 15} ${y + 5} Z`} fill="url(#chest-lid-left)" stroke="#1e293b" strokeWidth="0.5" />
+          <path d={`M ${x} ${y - 3} L ${x + 15} ${y + 5} L ${x + 15} ${y + 15} L ${x} ${y + 13} Z`} fill="url(#chest-lid-right)" stroke="#0f172a" strokeWidth="0.5" />
+          <path d={`M ${x - 12} ${y + 3.5} L ${x - 12} ${y + 13.5}`} stroke="#06b6d4" strokeWidth="1" filter="drop-shadow(0 0 2px #06b6d4)" />
+          <path d={`M ${x + 12} ${y + 3.5} L ${x + 12} ${y + 13.5}`} stroke="#06b6d4" strokeWidth="1" filter="drop-shadow(0 0 2px #06b6d4)" />
+          <path d={`M ${x - 2.5} ${y + 9} L ${x + 2.5} ${y + 9} L ${x + 1.5} ${y + 16} L ${x - 1.5} ${y + 16} Z`} fill="url(#sword-hilt-grad)" stroke="#78350f" strokeWidth="0.5" />
+          <circle cx={x} cy={y + 12.5} r={1.2} fill="#111827" />
+          <path d={`M ${x - 14.5} ${y + 5} L ${x} ${y + 13} L ${x + 14.5} ${y + 5}`} fill="none" stroke="#eab308" strokeWidth="1.2" opacity="0.85" filter="drop-shadow(0 0 3px #eab308)" />
+        </g>
+      );
+
     default:
       return (
         <g id="default-device">

@@ -96,6 +96,11 @@ import mysteryChestAttacks from './tryhackme/pre-security/module7-attacks-and-de
 import cs101SearchSkills from './tryhackme/cyber-security-101/module1-start-your-cyber-security-journey/search-skills.md?raw';
 import cs101MysteryChest from './tryhackme/cyber-security-101/module1-start-your-cyber-security-journey/mystery-chest.md?raw';
 
+import cs101LinuxFund1 from './tryhackme/cyber-security-101/module2-linux-fundamentals/linux-fundamentals-1.md?raw';
+import cs101LinuxFund2 from './tryhackme/cyber-security-101/module2-linux-fundamentals/linux-fundamentals-2.md?raw';
+import cs101LinuxFund3 from './tryhackme/cyber-security-101/module2-linux-fundamentals/linux-fundamentals-3.md?raw';
+import cs101LinuxChest from './tryhackme/cyber-security-101/module2-linux-fundamentals/mystery-chest.md?raw';
+
 export const notesByTopicId: Record<string, string> = {
   'offensive-security-intro': offSecIntro,
   'defensive-security-intro': defSecIntro,
@@ -192,4 +197,9 @@ export const notesByTopicId: Record<string, string> = {
 
   'search-skills': cs101SearchSkills,
   'mystery-chest-cs101': cs101MysteryChest,
+
+  'linux-fundamentals-1': cs101LinuxFund1,
+  'linux-fundamentals-2': cs101LinuxFund2,
+  'linux-fundamentals-3': cs101LinuxFund3,
+  'mystery-chest-linux': cs101LinuxChest,
 };
