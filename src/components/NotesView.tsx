@@ -1278,7 +1278,7 @@ const markdownComponents: import('react-markdown').Components = {
             <span className="text-[10px] text-gray-400 font-bold select-none tracking-wider uppercase">{CODE_LANG_LABEL[lang]}</span>
             <span className="w-12" />
           </div>
-          <pre className="p-4 overflow-x-auto whitespace-pre leading-relaxed bg-[#0b0f19] font-mono select-all">
+          <pre className="no-scrollbar p-4 overflow-x-auto whitespace-pre leading-relaxed bg-[#0b0f19] font-mono select-all">
             {renderCodeLines(lang, content)}
           </pre>
         </div>
@@ -1339,7 +1339,7 @@ const markdownComponents: import('react-markdown').Components = {
             seg.type === 'diagram' ? (
               <div
                 key={i}
-                className={`font-mono ${diagramFontClass(seg.text)} bg-[#111827]/90 border-l-4 border-[#9fef00] p-4 rounded-r-lg my-4 overflow-x-auto whitespace-pre leading-relaxed text-gray-300 shadow-[0_0_15px_rgba(159,239,0,0.03)] border-y border-r border-[#2d3a54]/40 select-all`}
+                className={`no-scrollbar font-mono ${diagramFontClass(seg.text)} bg-[#111827]/90 border-l-4 border-[#9fef00] p-4 rounded-r-lg my-4 overflow-x-auto whitespace-pre leading-relaxed text-gray-300 shadow-[0_0_15px_rgba(159,239,0,0.03)] border-y border-r border-[#2d3a54]/40 select-all`}
               >
                 {seg.text}
               </div>
@@ -1360,7 +1360,7 @@ const markdownComponents: import('react-markdown').Components = {
     // content is preserved exactly as written in the source. Horizontal scroll
     // (whitespace-pre) keeps ASCII alignment intact for diagrams.
     return (
-      <div className={`font-mono ${diagramFontClass(content)} bg-[#111827]/90 border-l-4 border-[#9fef00] p-4 rounded-r-lg my-4 overflow-x-auto whitespace-pre leading-relaxed text-gray-300 shadow-[0_0_15px_rgba(159,239,0,0.03)] border-y border-r border-[#2d3a54]/40 select-all`}>
+      <div className={`no-scrollbar font-mono ${diagramFontClass(content)} bg-[#111827]/90 border-l-4 border-[#9fef00] p-4 rounded-r-lg my-4 overflow-x-auto whitespace-pre leading-relaxed text-gray-300 shadow-[0_0_15px_rgba(159,239,0,0.03)] border-y border-r border-[#2d3a54]/40 select-all`}>
         {content}
       </div>
     );
