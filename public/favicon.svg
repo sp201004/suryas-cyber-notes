@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
-  <!-- Brand tile: dark green-tinted rounded square with a lime border (matches header logo) -->
-  <rect x="3" y="3" width="58" height="58" rx="15" fill="#20301a" stroke="#9fef00" stroke-opacity="0.35" stroke-width="2"/>
-  <!-- lucide NotebookPen glyph, enlarged to fill the tile, in brand lime green -->
-  <g transform="translate(10 10.5) scale(1.79)" fill="none" stroke="#9fef00" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Brand tile: near full-bleed dark green-tinted rounded square with a lime border (matches header logo) -->
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="#20301a" stroke="#9fef00" stroke-opacity="0.35" stroke-width="2"/>
+  <!-- lucide NotebookPen glyph, enlarged to fill most of the tile, centered, in brand lime green -->
+  <g transform="translate(8.5 8.5) scale(1.9583)" fill="none" stroke="#9fef00" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
     <path d="M13.4 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7.4"/>
     <path d="M2 6h4"/>
     <path d="M2 10h4"/>
