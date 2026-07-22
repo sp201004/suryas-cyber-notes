@@ -230,21 +230,24 @@ It uses public parameters everyone knows — a large prime `p` and a generator `
 
 ### Step by Step
 
-```text
-Public parameters:  p = 29 ,  g = 3
+> **Public parameters (known to everyone):** prime `p = 29`, generator `g = 3`.
 
-Step 1  Agree on public p and g
-Step 2  Choose private numbers   Alice a = 13    Bob b = 15
-Step 3  Compute public keys
-            Alice:  A = g^a mod p = 3^13 mod 29  = 19
-            Bob:    B = g^b mod p = 3^15 mod 29  = 26
-Step 4  Exchange public keys      Alice ──19──► Bob    Bob ──26──► Alice
-Step 5  Compute shared secret
-            Alice:  B^a mod p = 26^13 mod 29 = 10
-            Bob:    A^b mod p = 19^15 mod 29 = 10
+| **1** | **Agree on public `p` and `g`**<br>Both sides agree on the public values `p = 29` and `g = 3`. |
+| --- | --- |
 
-Shared Secret = 10   (never transmitted)
-```
+| **2** | **Choose private numbers**<br>Alice picks `a = 13`; Bob picks `b = 15` (kept secret, never sent). |
+| --- | --- |
+
+| **3** | **Compute public keys**<br>Alice: `A = g^a mod p = 3^13 mod 29 = 19`<br>Bob: `B = g^b mod p = 3^15 mod 29 = 26` |
+| --- | --- |
+
+| **4** | **Exchange public keys**<br>Alice → `19` → Bob, and Bob → `26` → Alice. |
+| --- | --- |
+
+| **5** | **Compute shared secret**<br>Alice: `B^a mod p = 26^13 mod 29 = 10`<br>Bob: `A^b mod p = 19^15 mod 29 = 10` |
+| --- | --- |
+
+> ✅ **Shared Secret = `10`** — both sides derive the same value, and it is **never transmitted** across the network.
 
 Both sides arrive at `10` without either one sending it across the wire. AES encryption can now begin using that shared secret.
 
@@ -363,17 +366,17 @@ Signatures use the key pair in the **opposite** direction to encryption: the **p
 
 Rather than signing an entire file, the signer signs its **hash** — far faster, since a 20 GB file reduces to a small fixed-size digest before signing.
 
-```text
-Step 1  Hash the message
-            "Hello Bob" ──► SHA-256 ──► A92D18...
-Step 2  Sign the hash
-            Hash ──► Alice's Private Key ──► Digital Signature
-Step 3  Send  Message + Signature
-Step 4  Bob verifies
-            Message ──► SHA-256 ──► Hash
-            Signature ──► Alice's Public Key ──► expected Hash
-            Hashes match?  ──► YES ──► Authentic
-```
+| **1** | **Hash the message**<br>`"Hello Bob"` → `SHA-256` → `A92D18...` |
+| --- | --- |
+
+| **2** | **Sign the hash**<br>`Hash` → Alice's Private Key → `Digital Signature` |
+| --- | --- |
+
+| **3** | **Send**<br>`Message` + `Signature` are sent together. |
+| --- | --- |
+
+| **4** | **Bob verifies**<br>`Message` → `SHA-256` → `Hash`<br>`Signature` → Alice's Public Key → `expected Hash`<br>Hashes match? → **YES** → Authentic |
+| --- | --- |
 
 ### Tamper Detection
 
