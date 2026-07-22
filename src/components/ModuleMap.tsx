@@ -398,6 +398,7 @@ const renderUniqueIsometricObject = (
     case 'mystery-chest-windows':
     case 'mystery-chest-cli':
     case 'mystery-chest-networking':
+    case 'mystery-chest-crypto':
       return (
         <g id="mystery-chest-scene">
           <ellipse cx={x} cy={y + 18} rx={22} ry={8} fill="rgba(234, 179, 8, 0.18)" filter="blur(4px)" />
@@ -1733,6 +1734,76 @@ const renderUniqueIsometricObject = (
           {/* Discovered host blips */}
           <circle cx={x + 6} cy={y - 6} r={1.6} fill="#9fef00" filter="drop-shadow(0 0 3px #9fef00)" />
           <circle cx={x - 5} cy={y + 4} r={1.3} fill="#4ade80" />
+        </g>
+      );
+
+    // CS101 M6 — Cryptography Basics: padlock over ciphertext (cipher/lock theme)
+    case 'cryptography-basics':
+      return (
+        <g id="crypto-basics-scene">
+          <ellipse cx={x} cy={y + 17} rx={18} ry={6} fill="rgba(159, 239, 0, 0.18)" filter="blur(3px)" />
+          {/* Padlock shackle */}
+          <path d={`M ${x - 6} ${y - 3} L ${x - 6} ${y - 8} C ${x - 6} ${y - 15} ${x + 6} ${y - 15} ${x + 6} ${y - 8} L ${x + 6} ${y - 3}`} fill="none" stroke="#9fef00" strokeWidth="2.4" />
+          {/* Padlock body */}
+          <rect x={x - 11} y={y - 3} width={22} height={17} rx={3} fill="#20301a" stroke="#9fef00" strokeWidth="1.6" />
+          {/* Keyhole */}
+          <circle cx={x} cy={y + 4} r={2.4} fill="#9fef00" />
+          <path d={`M ${x} ${y + 4} L ${x - 1.4} ${y + 10} L ${x + 1.4} ${y + 10} Z`} fill="#9fef00" />
+        </g>
+      );
+
+    // CS101 M6 — Public Key Cryptography: a public + private key pair
+    case 'public-key-crypto-basics':
+      return (
+        <g id="public-key-scene">
+          <ellipse cx={x} cy={y + 17} rx={18} ry={6} fill="rgba(56, 189, 248, 0.22)" filter="blur(3px)" />
+          {/* Key 1 (public, lime) — bow on the left, teeth to the right */}
+          <g transform={`rotate(-30 ${x} ${y})`}>
+            <circle cx={x - 9} cy={y} r={4.5} fill="none" stroke="#9fef00" strokeWidth="2.2" />
+            <line x1={x - 4.5} y1={y} x2={x + 11} y2={y} stroke="#9fef00" strokeWidth="2.2" strokeLinecap="round" />
+            <line x1={x + 8} y1={y} x2={x + 8} y2={y + 3.5} stroke="#9fef00" strokeWidth="2.2" strokeLinecap="round" />
+            <line x1={x + 11} y1={y} x2={x + 11} y2={y + 4} stroke="#9fef00" strokeWidth="2.2" strokeLinecap="round" />
+          </g>
+          {/* Key 2 (private, sky) — mirrored, offset down-right */}
+          <g transform={`rotate(150 ${x} ${y})`}>
+            <circle cx={x - 9} cy={y} r={4.5} fill="none" stroke="#38bdf8" strokeWidth="2.2" />
+            <line x1={x - 4.5} y1={y} x2={x + 11} y2={y} stroke="#38bdf8" strokeWidth="2.2" strokeLinecap="round" />
+            <line x1={x + 8} y1={y} x2={x + 8} y2={y + 3.5} stroke="#38bdf8" strokeWidth="2.2" strokeLinecap="round" />
+            <line x1={x + 11} y1={y} x2={x + 11} y2={y + 4} stroke="#38bdf8" strokeWidth="2.2" strokeLinecap="round" />
+          </g>
+        </g>
+      );
+
+    // CS101 M6 — Hashing: a fingerprint (unique digest) over a base plate
+    case 'hashing-basics':
+      return (
+        <g id="hashing-scene">
+          <ellipse cx={x} cy={y + 17} rx={18} ry={6} fill="rgba(168, 85, 247, 0.2)" filter="blur(3px)" />
+          {/* Concentric fingerprint arcs */}
+          <path d={`M ${x - 11} ${y - 2} C ${x - 8} ${y - 13} ${x + 8} ${y - 13} ${x + 11} ${y - 2}`} fill="none" stroke="#c084fc" strokeWidth="1.6" strokeLinecap="round" />
+          <path d={`M ${x - 8} ${y + 1} C ${x - 6} ${y - 9} ${x + 6} ${y - 9} ${x + 8} ${y + 1}`} fill="none" stroke="#a855f7" strokeWidth="1.6" strokeLinecap="round" />
+          <path d={`M ${x - 5} ${y + 3} C ${x - 4} ${y - 5} ${x + 4} ${y - 5} ${x + 5} ${y + 3}`} fill="none" stroke="#c084fc" strokeWidth="1.6" strokeLinecap="round" />
+          <path d={`M ${x - 2.5} ${y + 4} C ${x - 2} ${y - 1} ${x + 2} ${y - 1} ${x + 2.5} ${y + 4}`} fill="none" stroke="#a855f7" strokeWidth="1.6" strokeLinecap="round" />
+          {/* hash marks below */}
+          <line x1={x - 9} y1={y + 9} x2={x - 3} y2={y + 9} stroke="#9fef00" strokeWidth="1.4" strokeLinecap="round" />
+          <line x1={x + 1} y1={y + 9} x2={x + 9} y2={y + 9} stroke="#9fef00" strokeWidth="1.4" strokeLinecap="round" />
+          <line x1={x - 6} y1={y + 12} x2={x + 2} y2={y + 12} stroke="#38bdf8" strokeWidth="1.4" strokeLinecap="round" opacity="0.8" />
+        </g>
+      );
+
+    // CS101 M6 — John the Ripper: detective fedora + magnifier (cracking theme)
+    case 'john-the-ripper-basics':
+      return (
+        <g id="john-scene">
+          <ellipse cx={x} cy={y + 17} rx={18} ry={6} fill="rgba(239, 68, 68, 0.16)" filter="blur(3px)" />
+          {/* Fedora hat */}
+          <ellipse cx={x - 1} cy={y - 1} rx={15} ry={3.5} fill="#1e293b" stroke="#475569" strokeWidth="0.6" />
+          <path d={`M ${x - 9} ${y - 1} C ${x - 9} ${y - 12} ${x + 7} ${y - 12} ${x + 7} ${y - 1} Z`} fill="#334155" stroke="#64748b" strokeWidth="0.6" />
+          <path d={`M ${x - 9} ${y - 3.5} L ${x + 7} ${y - 3.5}`} stroke="#ef4444" strokeWidth="1.6" opacity="0.85" />
+          {/* Magnifier examining a hash */}
+          <circle cx={x + 7} cy={y + 7} r={5} fill="rgba(56,189,248,0.2)" stroke="#e2e8f0" strokeWidth="1.6" />
+          <line x1={x + 10.5} y1={y + 10.5} x2={x + 14} y2={y + 14} stroke="#e2e8f0" strokeWidth="2" strokeLinecap="round" />
+          <text x={x + 7} y={y + 8.5} fontSize="4.5" fill="#9fef00" textAnchor="middle" fontFamily="monospace">#</text>
         </g>
       );
 

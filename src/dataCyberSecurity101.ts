@@ -961,6 +961,201 @@ const netChestRoom: Topic = {
   ]
 };
 
+const CRYPTOGRAPHY_MODULE_ID = 'cryptography';
+
+// Module 6 · Room 1 — Cryptography Basics.
+const cryptoBasicsRoom: Topic = {
+  id: 'cryptography-basics',
+  moduleId: CRYPTOGRAPHY_MODULE_ID,
+  title: 'Cryptography Basics',
+  description: 'The foundation of cryptography: the CIA goals, plaintext/ciphertext/cipher/key, the encryption-decryption cycle, the Caesar cipher, symmetric vs asymmetric encryption, and the XOR and modulo math beneath it all.',
+  status: 'unlocked',
+  iconType: 'crypto-laptop',
+  content: '',
+  realWorldCallout: {
+    title: 'A Password Across the Wire',
+    concept: 'Confidentiality in Transit',
+    scenario: 'Without cryptography, a password typed into a login form travels the network in plain text for any eavesdropper to read. Encrypted, the same password becomes meaningless ciphertext that only the receiver\'s key can unlock.',
+    relevance: 'Every secure system — HTTPS, SSH, VPNs, password storage — rests on these building blocks, so the fundamentals here underpin the whole module.'
+  },
+  mindmap: [
+    { id: 'crypto', label: 'Cryptography', description: 'Turning readable data into protected ciphertext', x: 50, y: 12, connections: ['goals', 'terms', 'types', 'math'] },
+    { id: 'goals', label: 'CIA + Auth', description: 'Confidentiality, Integrity, Authentication, Non-repudiation', x: 16, y: 50 },
+    { id: 'terms', label: 'Core Terms', description: 'Plaintext, ciphertext, cipher, key; encryption cycle', x: 39, y: 58 },
+    { id: 'types', label: 'Sym vs Asym', description: 'AES (shared key) vs RSA/ECC (key pair)', x: 62, y: 58 },
+    { id: 'math', label: 'XOR & Modulo', description: 'The math operations beneath modern ciphers', x: 85, y: 50 }
+  ],
+  keyTakeaways: [
+    'Cryptography converts readable plaintext into ciphertext so only authorized users with the key can read it.',
+    'The four goals are confidentiality, integrity, authentication, and non-repudiation.',
+    'The algorithm (cipher) is public; only the key must stay secret.',
+    'The Caesar cipher shifts letters by a fixed key and has only 25 keys, so brute force breaks it instantly.',
+    'Symmetric encryption uses one shared key (AES, DES, 3DES); asymmetric uses a public/private pair (RSA, ECC, Diffie-Hellman).',
+    'XOR is reversible with the same key; modulo returns a remainder and is one-way — both are core to modern algorithms.'
+  ],
+  quiz: [
+    { id: 'q-cb-1', question: 'What are the four goals of cryptography?', type: 'text', correctAnswer: 'Confidentiality, Integrity, Authentication, Non-repudiation', hint: 'CIA + one more.' },
+    { id: 'q-cb-2', question: 'In cryptography, what must stay secret — the cipher or the key?', type: 'text', correctAnswer: 'The key', hint: 'The algorithm is public.' },
+    { id: 'q-cb-3', question: 'How many usable keys does the Caesar cipher have?', type: 'text', correctAnswer: '25', hint: '26-letter alphabet minus the no-shift.' },
+    { id: 'q-cb-4', question: 'Which encryption type uses one shared secret key?', type: 'text', correctAnswer: 'Symmetric', hint: 'AES is an example.' },
+    { id: 'q-cb-5', question: 'Which bitwise operation is reversible by applying the same key twice?', type: 'text', correctAnswer: 'XOR', hint: 'A XOR A = 0.' }
+  ]
+};
+
+// Module 6 · Room 2 — Public Key Cryptography Basics.
+const publicKeyRoom: Topic = {
+  id: 'public-key-crypto-basics',
+  moduleId: CRYPTOGRAPHY_MODULE_ID,
+  title: 'Public Key Cryptography Basics',
+  description: 'Public/private key pairs and how they solve secure key exchange: hybrid encryption, RSA, Diffie-Hellman, SSH key authentication, digital signatures, certificates/PKI, and PGP/GPG.',
+  status: 'unlocked',
+  iconType: 'shield',
+  content: '',
+  realWorldCallout: {
+    title: 'Sharing a Secret in the Open',
+    concept: 'The Key Exchange Problem',
+    scenario: 'Two people who have never met need a shared key over a network an attacker is watching. Diffie-Hellman lets them compute the same secret without ever sending it, and RSA lets anyone encrypt a message only the private-key holder can open.',
+    relevance: 'Public key cryptography underpins HTTPS, SSH, VPNs, signed software, and secure email — the trust layer of the entire Internet.'
+  },
+  mindmap: [
+    { id: 'pk', label: 'Public Key Crypto', description: 'Public/private key pairs for exchange and identity', x: 50, y: 12, connections: ['hybrid', 'rsa', 'ssh', 'sig'] },
+    { id: 'hybrid', label: 'Hybrid & Key Exchange', description: 'Asymmetric shares a symmetric key; RSA vs Diffie-Hellman', x: 16, y: 50 },
+    { id: 'rsa', label: 'RSA & DH', description: 'Factoring and discrete-log hard problems', x: 39, y: 58 },
+    { id: 'ssh', label: 'SSH Keys', description: 'ssh-keygen, authorized_keys, key-based auth', x: 62, y: 58 },
+    { id: 'sig', label: 'Signatures & PKI', description: 'Sign a hash; certificates, CAs, PGP/GPG', x: 85, y: 50 }
+  ],
+  keyTakeaways: [
+    'Asymmetric cryptography uses a public key to encrypt/verify and a private key to decrypt/sign; the private key is never shared.',
+    'Hybrid encryption uses asymmetric crypto to exchange a symmetric key, then fast AES encrypts the data (HTTPS, SSH, VPNs).',
+    'RSA security rests on prime factorization; Diffie-Hellman computes a shared secret without transmitting it (discrete log).',
+    'SSH uses asymmetric authentication (ssh-keygen, authorized_keys, known_hosts) then symmetric session encryption.',
+    'Digital signatures sign a hash with the private key and verify with the public key — integrity, authentication, non-repudiation.',
+    'Certificates, CAs, and PKI bind identities to public keys; PGP/GPG secure email via a decentralised web of trust.'
+  ],
+  quiz: [
+    { id: 'q-pk-1', question: 'Which key encrypts data in asymmetric cryptography, public or private?', type: 'text', correctAnswer: 'Public', hint: 'The private key decrypts.' },
+    { id: 'q-pk-2', question: 'What hard problem is RSA security based on?', type: 'text', correctAnswer: 'Prime factorization', hint: 'Easy to multiply, hard to factor.' },
+    { id: 'q-pk-3', question: 'Which algorithm lets two parties compute a shared secret without sending it?', type: 'text', correctAnswer: 'Diffie-Hellman', hint: 'A key-exchange algorithm.' },
+    { id: 'q-pk-4', question: 'Which key creates a digital signature?', type: 'text', correctAnswer: 'Private key', hint: 'The public key verifies it.' },
+    { id: 'q-pk-5', question: 'What binds an identity to a public key on the web?', type: 'text', correctAnswer: 'Certificate', hint: 'Signed by a CA.' }
+  ]
+};
+
+// Module 6 · Room 3 — Hashing Basics.
+const hashingRoom: Topic = {
+  id: 'hashing-basics',
+  moduleId: CRYPTOGRAPHY_MODULE_ID,
+  title: 'Hashing Basics',
+  description: 'One-way hashing for integrity and password storage: hash properties and the avalanche effect, MD5/SHA families, collisions, salting, rainbow tables, bcrypt/Argon2, recognising hashes, HMAC, and hashing vs encoding vs encryption.',
+  status: 'unlocked',
+  iconType: 'search',
+  content: '',
+  realWorldCallout: {
+    title: 'Storing Passwords the Right Way',
+    concept: 'One-Way by Design',
+    scenario: 'A breached database of plaintext passwords compromises every user instantly. Stored as salted Argon2 or bcrypt hashes, the same leak yields little — the hashes cannot be reversed and each is unique even for identical passwords.',
+    relevance: 'Hashing verifies integrity and protects credentials across logins, downloads, Git, and TLS, making it a pillar of practical security.'
+  },
+  mindmap: [
+    { id: 'hash', label: 'Hashing', description: 'One-way, fixed-size digest of data', x: 50, y: 12, connections: ['props', 'algos', 'pw', 'hmac'] },
+    { id: 'props', label: 'Properties', description: 'Deterministic, one-way, avalanche effect, collision-resistant', x: 16, y: 50 },
+    { id: 'algos', label: 'Algorithms', description: 'MD5/SHA1 broken; SHA-256/512 secure', x: 39, y: 58 },
+    { id: 'pw', label: 'Password Storage', description: 'Salting + slow hashes (bcrypt, Argon2); rainbow tables', x: 62, y: 58 },
+    { id: 'hmac', label: 'Integrity & HMAC', description: 'File verification; HMAC = hash + secret key', x: 85, y: 50 }
+  ],
+  keyTakeaways: [
+    'Hashing is one-way and produces a fixed-size digest with no keys — it cannot be reversed.',
+    'The avalanche effect means one changed bit produces a completely different hash, the basis of integrity checking.',
+    'MD5 (128-bit) and SHA-1 (160-bit) are broken; SHA-256 and SHA-512 are secure.',
+    'Never store plaintext or encrypted passwords; use salting plus a slow hash — Argon2id, bcrypt, scrypt, or PBKDF2.',
+    'Salting defeats rainbow tables by making identical passwords hash differently; recognise hashes by prefix and length.',
+    'HMAC combines a hash with a secret key for integrity and authentication; hashing is not encoding or encryption.'
+  ],
+  quiz: [
+    { id: 'q-hb-1', question: 'Is hashing reversible?', type: 'text', correctAnswer: 'No', hint: 'It is a one-way function.' },
+    { id: 'q-hb-2', question: 'What is the effect where one changed bit completely changes the hash?', type: 'text', correctAnswer: 'Avalanche effect', hint: 'Key to integrity checking.' },
+    { id: 'q-hb-3', question: 'What random value is added to a password before hashing to defeat rainbow tables?', type: 'text', correctAnswer: 'Salt', hint: 'Makes identical passwords hash differently.' },
+    { id: 'q-hb-4', question: 'Name a modern slow password-hashing algorithm.', type: 'text', correctAnswer: 'Argon2', hint: 'Also bcrypt, scrypt, PBKDF2.' },
+    { id: 'q-hb-5', question: 'What does HMAC combine with a hash function?', type: 'text', correctAnswer: 'A secret key', hint: 'Adds authentication to integrity.' }
+  ]
+};
+
+// Module 6 · Room 4 — John the Ripper: The Basics.
+const johnRoom: Topic = {
+  id: 'john-the-ripper-basics',
+  moduleId: CRYPTOGRAPHY_MODULE_ID,
+  title: 'John the Ripper: The Basics',
+  description: 'Offline password cracking with John: dictionary attacks and rockyou.txt, specifying hash formats, cracking NTLM and /etc/shadow hashes, single crack mode, custom rules, and cracking ZIP/RAR/SSH-key passwords.',
+  status: 'unlocked',
+  iconType: 'skull',
+  content: '',
+  realWorldCallout: {
+    title: 'From Captured Hash to Password',
+    concept: 'Offline Cracking',
+    scenario: 'After gaining a foothold, a tester dumps /etc/shadow or a SAM database — files that hold only hashes. John hashes candidate passwords and compares, recovering weak passwords offline with no lockouts or network delay.',
+    relevance: 'John is a core password-auditing tool that turns weak, reused, or name-based passwords into concrete evidence for strengthening policy.'
+  },
+  mindmap: [
+    { id: 'john', label: 'John the Ripper', description: 'Offline password cracker', x: 50, y: 12, connections: ['dict', 'formats', 'modes', 'helpers'] },
+    { id: 'dict', label: 'Dictionary', description: 'rockyou.txt of real leaked passwords', x: 16, y: 50 },
+    { id: 'formats', label: 'Hash Formats', description: '--format raw-md5 / nt / sha512crypt', x: 39, y: 58 },
+    { id: 'modes', label: 'Modes', description: 'Single, rules, incremental attacks', x: 62, y: 58 },
+    { id: 'helpers', label: 'Helper Tools', description: 'unshadow, zip2john, rar2john, ssh2john', x: 85, y: 50 }
+  ],
+  keyTakeaways: [
+    'John cracks offline: it hashes candidate passwords and compares them to a stored hash — it never decrypts.',
+    'Start with a dictionary attack using rockyou.txt; auto-detection can be wrong, so set --format (raw-md5, nt, sha512crypt).',
+    'Windows NTLM hashes (SAM / NTDS.dit) crack with --format=nt; Linux $6$ hashes use --format=sha512crypt.',
+    'unshadow merges /etc/passwd and /etc/shadow because John needs both username and hash.',
+    'Single Crack Mode uses usernames and GECOS; Rules mutate dictionary words; incremental is brute-force last resort.',
+    'Helper tools zip2john, rar2john, and ssh2john extract crackable hashes from archives and keys. Only crack authorised targets.'
+  ],
+  quiz: [
+    { id: 'q-jtr-1', question: 'Does John the Ripper decrypt hashes?', type: 'text', correctAnswer: 'No', hint: 'It guesses and compares.' },
+    { id: 'q-jtr-2', question: 'Which famous wordlist comes from a 2009 breach?', type: 'text', correctAnswer: 'rockyou.txt', hint: 'Millions of real passwords.' },
+    { id: 'q-jtr-3', question: 'Which --format value cracks Windows NTLM hashes?', type: 'text', correctAnswer: 'nt', hint: 'Not "ntlm".' },
+    { id: 'q-jtr-4', question: 'Which tool merges /etc/passwd and /etc/shadow for John?', type: 'text', correctAnswer: 'unshadow', hint: 'John needs both files combined.' },
+    { id: 'q-jtr-5', question: 'Which helper extracts a crackable hash from an SSH private key?', type: 'text', correctAnswer: 'ssh2john', hint: 'It targets the passphrase.' }
+  ]
+};
+
+// Module 6 · Room 5 — Mystery Chest (Bonus Revision) for the Cryptography module.
+const cryptoChestRoom: Topic = {
+  id: 'mystery-chest-crypto',
+  moduleId: CRYPTOGRAPHY_MODULE_ID,
+  title: 'Mystery Chest',
+  description: 'A bonus revision vault for the whole Cryptography module: core terms, symmetric vs asymmetric, algorithms, hashing and password storage, digital signatures/PKI, and OpenSSL/GPG/John references.',
+  status: 'unlocked',
+  iconType: 'mystery-chest',
+  content: '',
+  realWorldCallout: {
+    title: 'The Crypto Field Card',
+    concept: 'Fast Recall Under Pressure',
+    scenario: 'Mid-lab, an analyst needs the right hash prefix or the correct John format flag. Instead of switching to a browser, they glance at a single consolidated sheet covering encryption, hashing, signatures, and cracking commands.',
+    relevance: 'Cryptography reduces to three jobs — confidentiality, integrity, authenticity — and one reference that ties the algorithms, hashes, and tools together makes them stick.'
+  },
+  mindmap: [
+    { id: 'chest-crypto', label: 'Crypto Cheat Sheet', description: 'The whole module at a glance', x: 50, y: 15, connections: ['enc', 'hash', 'tools'] },
+    { id: 'enc', label: 'Encryption', description: 'Symmetric/asymmetric, RSA/DH/ECC, signatures & PKI', x: 20, y: 52 },
+    { id: 'hash', label: 'Hashing', description: 'MD5/SHA, bcrypt/Argon2, prefixes & lengths', x: 50, y: 58 },
+    { id: 'tools', label: 'Tools', description: 'openssl, gpg, ssh-keygen, John the Ripper', x: 80, y: 52 }
+  ],
+  keyTakeaways: [
+    'Encryption is reversible with a key; hashing is one-way; encoding (Base64) is neither and offers no protection.',
+    'Symmetric (AES) is fast for bulk data; asymmetric (RSA, DH, ECC) handles key exchange, signatures, and identity.',
+    'MD5/SHA-1 are broken; SHA-256/512 are secure; passwords need slow salted hashes (Argon2id, bcrypt).',
+    'Recognise hashes by prefix/length: $2b$ bcrypt, $6$ SHA-512crypt, 32 hex MD5, 64 hex SHA-256.',
+    'Digital signatures use the private key to sign and the public key to verify; PKI and CAs bind identities.',
+    'John cracks offline (dictionary/single/rules/incremental); zip2john, ssh2john, and unshadow prepare crackable hashes.'
+  ],
+  quiz: [
+    { id: 'q-mcc-1', question: 'Which is one-way — hashing or encryption?', type: 'text', correctAnswer: 'Hashing', hint: 'Encryption is reversible with a key.' },
+    { id: 'q-mcc-2', question: 'Which symmetric algorithm is the modern standard?', type: 'text', correctAnswer: 'AES', hint: 'DES/3DES are dead.' },
+    { id: 'q-mcc-3', question: 'Which hash prefix indicates SHA-512crypt on Linux?', type: 'text', correctAnswer: '$6$', hint: 'Seen in /etc/shadow.' },
+    { id: 'q-mcc-4', question: 'Is Base64 encryption?', type: 'text', correctAnswer: 'No', hint: 'It is reversible encoding, no key.' }
+  ]
+};
+
 export const CYBER_SECURITY_101_MODULES: Module[] = [
   {
     id: START_MODULE_ID,
@@ -1025,6 +1220,19 @@ export const CYBER_SECURITY_101_MODULES: Module[] = [
       tcpdumpRoom,
       nmapRoom,
       netChestRoom,
+    ],
+  },
+  {
+    id: CRYPTOGRAPHY_MODULE_ID,
+    title: 'Cryptography',
+    description: 'Understand how data is protected — encryption fundamentals, public key cryptography and digital signatures, one-way hashing and secure password storage, and offline password cracking with John the Ripper — across four rooms plus a bonus revision chest.',
+    isFuture: false,
+    topics: [
+      cryptoBasicsRoom,
+      publicKeyRoom,
+      hashingRoom,
+      johnRoom,
+      cryptoChestRoom,
     ],
   },
   // Future modules are appended here, one object at a time.

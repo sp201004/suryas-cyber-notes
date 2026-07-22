@@ -121,6 +121,12 @@ import cs101Tcpdump from './tryhackme/cyber-security-101/module5-networking/tcpd
 import cs101Nmap from './tryhackme/cyber-security-101/module5-networking/nmap-basics.md?raw';
 import cs101NetChest from './tryhackme/cyber-security-101/module5-networking/mystery-chest.md?raw';
 
+import cs101CryptoBasics from './tryhackme/cyber-security-101/module6-cryptography/cryptography-basics.md?raw';
+import cs101PublicKey from './tryhackme/cyber-security-101/module6-cryptography/public-key-crypto-basics.md?raw';
+import cs101Hashing from './tryhackme/cyber-security-101/module6-cryptography/hashing-basics.md?raw';
+import cs101John from './tryhackme/cyber-security-101/module6-cryptography/john-the-ripper-basics.md?raw';
+import cs101CryptoChest from './tryhackme/cyber-security-101/module6-cryptography/mystery-chest.md?raw';
+
 export const notesByTopicId: Record<string, string> = {
   'offensive-security-intro': offSecIntro,
   'defensive-security-intro': defSecIntro,
@@ -242,4 +248,10 @@ export const notesByTopicId: Record<string, string> = {
   'tcpdump-basics': cs101Tcpdump,
   'nmap-basics': cs101Nmap,
   'mystery-chest-networking': cs101NetChest,
+
+  'cryptography-basics': cs101CryptoBasics,
+  'public-key-crypto-basics': cs101PublicKey,
+  'hashing-basics': cs101Hashing,
+  'john-the-ripper-basics': cs101John,
+  'mystery-chest-crypto': cs101CryptoChest,
 };
